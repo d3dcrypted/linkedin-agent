@@ -2,7 +2,7 @@
 name: linkedin-post
 description: Turn one raw thought into a cited LinkedIn post draft.
 version: 0.1.0
-author: d3d (d3dcrypted), Hermes Agent
+author: Hermes Agent
 license: MIT
 platforms: [linux, macos, windows]
 metadata:

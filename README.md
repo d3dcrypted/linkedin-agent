@@ -19,24 +19,32 @@ the draft under `posts/`, image prompt included. Zero dependencies, zero keys.
 This repo is the single source of truth for those two skills: they are not copied
 into the agent profile, the profile points here with symlinks (see Installation).
 
-**Working with one search key: `lnkd.py`, the standalone pipeline.** The full
-seed → search → draft → image prompt flow runs on the standard library alone.
-Its research stage needs a search provider: set `TAVILY_API_KEY` and it uses
-Tavily for both search and full-text extract (one key covers both). With no key
-it falls back to keyless DuckDuckGo plus a plain HTTP fetch — which is what this
-repo's author hit as blocked from his own VM, hence the key below.
+**Working with or without a search key: `lnkd.py`, the standalone pipeline.** The
+full seed → search → draft → image prompt flow runs on the standard library alone.
+Its research stage works keyless out of the box: with no key it searches with
+DuckDuckGo and fetches each page over plain HTTP. That is a complete, valid path —
+a reader who sets nothing still gets a working `lnkd.py`.
 
-    python3 lnkd.py "my thought" --n 4
+A key is optional, and buys resilience only. Set `TAVILY_API_KEY` and the same
+`search()` uses the keyed provider instead: it does not get rate-limited or
+challenged the way the keyless endpoint can, and — unlike DuckDuckGo — it also
+returns full page text, so one key covers both the search and the extract step.
+The key exists here for one concrete reason: from the author's own VM the keyless
+endpoint answers 429/challenge, so the keyless path is fine in general and was
+blocked only from that IP. Both paths live in `search()`; neither is a stub.
+
+    python3 lnkd.py "my thought" --n 4      # keyless by default
 
 ## What you need to run it
 
-Nothing is mandatory: the skill path needs no key. What makes `lnkd.py` reliable
-is one key. In both cases the file is `~/.hermes/.env` (or a local `./.env`),
-one `KEY=value` per line — `lnkd.py` reads both, `load_env()` at the top.
+Nothing is mandatory. The skill path needs no key, and `lnkd.py` is complete
+without one — the key below is a resilience upgrade, not a prerequisite. The env
+file is `~/.hermes/.env` (or a local `./.env`), one `KEY=value` per line —
+`lnkd.py` reads both, `load_env()` at the top.
 
 | Variable | Needed for | Without it |
 |---|---|---|
-| `TAVILY_API_KEY` | `lnkd.py` search + extract. Free tier: 1000 calls/month, key at https://tavily.com | keyless DuckDuckGo fallback, often blocked/429 |
+| `TAVILY_API_KEY` | `lnkd.py` resilience: keyed search + full-text extract, one key for both. Free tier: 1000 calls/month, key at https://tavily.com | keyless DuckDuckGo + plain fetch — valid unless your IP is rate-limited |
 | `OPENROUTER_API_KEY` | the drafting LLM in `lnkd.py` | `lnkd.py` exits with a clear message |
 | `OPENROUTER_MODEL` | optional, overrides the default model | `openai/gpt-oss-120b` |
 

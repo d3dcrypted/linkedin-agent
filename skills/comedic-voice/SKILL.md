@@ -2,7 +2,7 @@
 name: comedic-voice
 description: Craft real irony, not cabaret. Stand-up structure for text.
 version: 0.1.0
-author: d3d (d3dcrypted), Hermes Agent
+author: Hermes Agent
 license: MIT
 metadata:
   hermes:

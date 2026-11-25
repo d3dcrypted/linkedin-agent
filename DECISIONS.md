@@ -3,7 +3,7 @@
 Why this repo is built the way it is. Every non-obvious choice is recorded here
 with the reason behind it.
 
-`Decided by` is `Human` when the author (d3d) made the call, `Agent` when the
+`Decided by` is `Human` when the author made the call, `Agent` when the
 assistant proposed it and the author accepted it. Several entries quote the
 author's own request, because the wording is more precise than a paraphrase.
 
@@ -305,4 +305,21 @@ author's own request, because the wording is more precise than a paraphrase.
 - **Not verified:** the keyed path was not exercised end to end here — no key was
   configured during the change. Offline checks only: `py_compile` and the
   `search()` branch. Live verification needs the author's key in `.env`.
+
+## 19. No secrets, no IPs, no named identity in the public tree
+
+- **Decided by:** Human. This is the project's standing rule, the same one the
+  rest of the infrastructure runs on: credentials, addresses and other private
+  data never reach a GitHub push.
+- **Rule:** the public tree carries no credential, no hostname or IP address, and
+  no named individual. The skills and the agent instructions address *the author*
+  or *a user* — a skill is reusable by anyone, it is not one person's tool, so a
+  personal name does not belong in it.
+- **Enforcement:** `.env` is git-ignored, only variable *names* live in
+  `.env.example`. Before each push, scan the tracked tree for keys (`sk-`, `ghp_`,
+  `github_pat_`, `tvly-`, `AKIA`, `BEGIN ... PRIVATE KEY`), IP shapes
+  (`(d+\.){3}d+`) and personal handles.
+- **Kept on purpose:** the `LICENSE` copyright holder. It is identity, not a
+  credential, and a public repository already exposes its owner. Changing it is a
+  license change, not a hygiene fix.
 

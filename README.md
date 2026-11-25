@@ -8,25 +8,49 @@ every figure in the text traceable to a source.
 
 ## Status
 
-Two parts, one of which works today.
+Two parts, either of which works on its own.
 
-**Working: a Hermes skill.** The pipeline used in practice is the `linkedin-post`
-skill, which lives in this repo at `skills/linkedin-post/`. It uses the agent's
-native web search tool, drafts with the `comedic-voice` skill
+**Working today with zero keys: a Hermes skill.** The pipeline used in practice is
+the `linkedin-post` skill, which lives in this repo at `skills/linkedin-post/`. It
+uses the agent's native web search tool, drafts with the `comedic-voice` skill
 (`skills/comedic-voice/`), always passes the text through `humanizer`, and saves
 the draft under `posts/`, image prompt included. Zero dependencies, zero keys.
 
 This repo is the single source of truth for those two skills: they are not copied
 into the agent profile, the profile points here with symlinks (see Installation).
 
-**Not working: `lnkd.py`.** The standalone pipeline is complete (search, draft,
-write to disk) but its search stage is blocked. From this VM, every keyless
-search engine reachable (DDG html/lite, Bing, Mojeek, SearXNG, Brave, Ecosia)
-answers with a challenge or HTTP 429, and letting the LLM guess URLs produced
-hallucinated identifiers. To unblock it the repo needs a search key: set
-`TAVILY_API_KEY` (or Brave/Serper) and wire it up in `ddg()`.
+**Working with one search key: `lnkd.py`, the standalone pipeline.** The full
+seed → search → draft → image prompt flow runs on the standard library alone.
+Its research stage needs a search provider: set `TAVILY_API_KEY` and it uses
+Tavily for both search and full-text extract (one key covers both). With no key
+it falls back to keyless DuckDuckGo plus a plain HTTP fetch — which is what this
+repo's author hit as blocked from his own VM, hence the key below.
 
-    python3 lnkd.py "my thought" --n 4      # requires an unblocked search backend
+    python3 lnkd.py "my thought" --n 4
+
+## What you need to run it
+
+Nothing is mandatory: the skill path needs no key. What makes `lnkd.py` reliable
+is one key. In both cases the file is `~/.hermes/.env` (or a local `./.env`),
+one `KEY=value` per line — `lnkd.py` reads both, `load_env()` at the top.
+
+| Variable | Needed for | Without it |
+|---|---|---|
+| `TAVILY_API_KEY` | `lnkd.py` search + extract. Free tier: 1000 calls/month, key at https://tavily.com | keyless DuckDuckGo fallback, often blocked/429 |
+| `OPENROUTER_API_KEY` | the drafting LLM in `lnkd.py` | `lnkd.py` exits with a clear message |
+| `OPENROUTER_MODEL` | optional, overrides the default model | `openai/gpt-oss-120b` |
+
+`.env.example` lists the same three. The skill path (the one used in practice)
+needs none of them: it runs on the agent's native tools.
+
+If you drive the skill through the Hermes agent, point its web-extract backend at
+a provider that can actually extract — in `~/.hermes/config.yaml`:
+
+    web:
+      extract_backend: tavily
+
+The default `ddgs` backend is search-only and refuses extraction. This touches the
+author's own agent config, so it is documented here but set by hand.
 
 ## How a post is built
 
@@ -101,9 +125,10 @@ so it runs on the system Python with no virtualenv.
     AGENTS.md            instructions for any agent working in this repo
     IMAGE-PROMPTS.md     how the image prompt is written, and how to use it anywhere
     skills/              the two skills this repo owns (linkedin-post, comedic-voice)
-    lnkd.py              standalone pipeline, search stage blocked (see Status)
+    lnkd.py              standalone pipeline (stdlib only); needs TAVILY_API_KEY to be reliable
     posts/               generated drafts, markdown with frontmatter
     posts/.closers.log   closing lines already published, one per post. Commit it.
+    .env.example         the environment variables above, names only
 
 ## Why it is built this way
 

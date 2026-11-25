@@ -98,9 +98,51 @@ def to_text(raw):
     return re.sub(r"[ \t]+", " ", re.sub(r"\n{2,}", "\n", "".join(p.out))).strip()
 
 
+TAVILY = "https://api.tavily.com"
+# Tavily free tier does both search and full-text extract under ONE key, so a
+# single TAVILY_API_KEY unblocks the whole research stage. Get one at
+# https://tavily.com (1000 calls/month free). Nothing here is required: without
+# the key the code falls back to keyless DuckDuckGo + a plain HTTP fetch.
+
+
+def tavily_key():
+    return os.environ.get("TAVILY_API_KEY")
+
+
+def _tavily(path, payload):
+    """One POST to the Tavily API. ponytail: no retry/backoff, add it if a 429 shows up."""
+    req = urllib.request.Request(TAVILY + path, data=json.dumps(payload).encode(),
+                                 headers={**UA, "Authorization": f"Bearer {tavily_key()}",
+                                          "Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.load(r)
+
+
+def tavily_search(query, n=4):
+    """Keyed search: URLs only, the full text is extracted in one batch after."""
+    data = _tavily("/search", {"query": query, "max_results": max(1, min(n, 20)),
+                               "search_depth": "basic"})
+    return [{"url": r["url"]} for r in data.get("results", []) if r.get("url")]
+
+
+def tavily_extract(urls):
+    """Batch full-text extract. Returns {url: text}. One HTTP call for all URLs."""
+    if not urls:
+        return {}
+    data = _tavily("/extract", {"urls": list(urls)})
+    return {r["url"]: (r.get("raw_content") or "") for r in data.get("results", [])}
+
+
+def search(query, n=4):
+    """Keyed provider when TAVILY_API_KEY is set, keyless DuckDuckGo otherwise.
+    ponytail: the keyless branch is intentional — it is what a reader without a
+    key still gets, and what keeps the tool from depending on a paid account."""
+    return tavily_search(query, n) if tavily_key() else ddg(query, n)
+
+
 def ddg(query, n=4):
     """Keyless search via the DuckDuckGo html endpoint. ponytail: fragile if DDG
-    changes its markup or blocks; upgrade path = keyed provider (Brave/Serper)."""
+    changes its markup or blocks; upgrade path = keyed provider (TAVILY_API_KEY)."""
     url = "https://html.duckduckgo.com/html/?q=" + urllib.parse.quote(query)
     raw = urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=20).read().decode("utf-8", "ignore")
     out = []
@@ -140,21 +182,25 @@ def main():
         sys.exit("no query generated")
 
     print("2/4 collecting the sources...", file=sys.stderr)
-    srcs, seen = [], set()
+    cands, seen = [], set()
     for q in qs:
-        for r in ddg(q, 3):
+        for r in search(q, 3):
             if r["url"] in seen:
                 continue
             seen.add(r["url"])
-            txt = fetch(r["url"])
-            if txt and len(txt) > 400:
-                srcs.append(r | {"text": txt, "query": q})
-            if len(srcs) >= a.n:
-                break
+            cands.append(r | {"query": q})
+    # One batched extract call when a key is set; a per-URL HTTP fetch otherwise.
+    extracted = tavily_extract([r["url"] for r in cands]) if tavily_key() else {}
+    srcs = []
+    for r in cands:
+        txt = extracted.get(r["url"]) or fetch(r["url"])
+        if txt and len(txt) > 400:
+            srcs.append(r | {"text": txt[:3500]})
         if len(srcs) >= a.n:
             break
     if not srcs:
-        sys.exit("no source collected — network or search down")
+        sys.exit("no source collected — search/fetch down. Set TAVILY_API_KEY to unblock "
+                 "(see README, section Status).")
 
     blocks = "\n\n".join(f"### SOURCE {i+1}: {s['url']}\n{s['text']}" for i, s in enumerate(srcs))
     print(f"3/4 writing the post ({len(srcs)} sources)...", file=sys.stderr)

@@ -29,9 +29,10 @@ author's own request, because the wording is more precise than a paraphrase.
   reachable from this IP returns a challenge or 429, and asking the LLM to
   propose URLs produced hallucinated arXiv identifiers. Shipping a standalone
   tool whose search stage does not work would have been a demo, not a product.
-- **Consequence:** `lnkd.py` stays in the repo as the portable skeleton with its
-  search stage explicitly marked as blocked. Running it standalone needs a search
-  key (`TAVILY_API_KEY`, Brave or Serper) wired into `ddg()`.
+- **Consequence:** `lnkd.py` carries the blocked-search history in its comments.
+  Running it standalone needs a search key (`TAVILY_API_KEY`) wired into the
+  `search()` dispatcher; without it the keyless DuckDuckGo fallback applies.
+  See §18.
 - **Cost of this choice:** the repo cannot reproduce the pipeline end to end on
   its own, because the runtime is a skill living in the author's agent profile.
   Stated plainly in the README rather than hidden.
@@ -279,4 +280,29 @@ author's own request, because the wording is more precise than a paraphrase.
   there is no backend. The prompt structure is sourced in `IMAGE-PROMPTS.md`, and
   the LinkedIn limits come from LinkedIn's help pages read through third-party
   guides, because `web_extract` is down (§12).
+
+## 18. One search key (Tavily) for both search and extract, keyless fallback kept
+
+- **Decided by:** Joint. The author asked for "the best solution" and a guide to
+  set it up; the choice of a single provider is the agent's proposal, accepted.
+- **Choice:** `lnkd.py` gets a `search()` dispatcher. With `TAVILY_API_KEY` set it
+  uses Tavily for search and, in one batched call, for full-text extract. With no
+  key it keeps the keyless DuckDuckGo path. The Hermes skill path is unchanged and
+  stays keyless; its `web_extract` is documented to run against
+  `web.extract_backend: tavily` in the agent's `config.yaml`.
+- **Why one provider:** Tavily does search *and* extract under a single key, so one
+  signup unblocks the whole research stage. A search-only provider would leave the
+  extract half blocked (§12). 1000 calls/month free is more than this pipeline uses.
+- **Why the keyless fallback stays (not deleted):** the repo must keep working for
+  a reader who has no key. Deleting the fallback would trade one soft failure
+  (blocked keyless search) for a hard one (it cannot even try). It is also the
+  author's rule for this project: never remove the working path to add the new one.
+- **Rejected: vendorizing a search library.** The standard library does the HTTP;
+  adding a dependency for two POSTs is cost without benefit.
+- **Rejected: Brave/Serper.** Search-only in the shape this uses, so they unblock
+  half the stage. Listed as alternatives in the old note; superseded by the
+  single-key option.
+- **Not verified:** the keyed path was not exercised end to end here — no key was
+  configured during the change. Offline checks only: `py_compile` and the
+  `search()` branch. Live verification needs the author's key in `.env`.
 

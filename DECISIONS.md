@@ -61,7 +61,7 @@ author's own request, because the wording is more precise than a paraphrase.
   itself, not devices chosen on purpose. This is the author's requirement to be
   actually ironic rather than generically formal.
 
-## 5. Sources are inline micro-citations, never a block at the end
+## 5. Sources are inline micro-citations, never a block at the end  *(superseded by the first-comment rule, §20)*
 
 - **Decided by:** Human, verbatim: *"le risorse debbano essere sempre presenti
   nel testo, troviamo un modo per inserire le risorse senza togliere troppo
@@ -152,7 +152,7 @@ author's own request, because the wording is more precise than a paraphrase.
   claims and no picture is worth more than the reverse. Adding an image stage
   before the text stage is solid would be building the easy half first.
 
-## 11. Research in English, post in Italian
+## 11. Research in English, post in Italian  *(superseded by §21)*
 
 - **Decided by:** Agent, accepted.
 - **Why:** coverage. Sources with usable figures on these topics are mostly
@@ -209,6 +209,9 @@ author's own request, because the wording is more precise than a paraphrase.
 - `humanizer`: third party, MIT, by `blader` (github.com/blader/humanizer),
   required by step 4 of the pipeline. Not redistributed in this repo. Not
   modified.
+- **Superseded in part by §21:** the post is now written in English, so the
+  example draft was rewritten in English and the gate patterns with it. The verbatim
+  quotes below stay in Italian because that is the record of what was asked.
 - **The banned-pattern list in `check_post.py` is a re-implementation in regular
   expressions** of the AI-writing tells catalogued in Wikipedia *Signs of AI
   writing*, the same catalogue `humanizer` implements. No code was copied; the
@@ -222,16 +225,16 @@ author's own request, because the wording is more precise than a paraphrase.
   traducilo in inglese"*.
 - **Choice:** every artifact in the committed tree is English: README, this file,
   code comments, docstrings, printed output, `--help`, and the instructions of
-  both skills. Italian survives in exactly three places: the drafts under
-  `posts/`, the closing-line log `posts/.closers.log`, and the banned-pattern
-  regular expressions in `check_post.py`.
-- **Why:** Italian is the *output* language of the product, not the language of
-  the code. A reader who does not read Italian can still audit and reuse the gate
-  and the skills. The parts left in Italian are data, not prose: the drafted text,
-  the closing lines already published, and the patterns that must match Italian
-  sentences to be useful at all.
-- **Why the Italian survives at all:** it is not a leftover waiting to be
-  translated, it is the chosen working language of the output. The author's
+  both skills. Italian survives in the frontmatter `seed` of a draft (the author's verbatim
+  words, data not prose) and in the verbatim author quotes in this file. Everything
+  else — drafts, log, gate patterns — is English now (see §21).
+- **Why:** Italian *was* the output language of the product (English since §21), never
+  the language of the code. A reader who does not read Italian can still audit and
+  reuse the gate and the skills. The parts still in Italian are data, not prose: the
+  frontmatter seed and the verbatim quotes in this file.
+- **Why the Italian survived at all (retired by §21, recorded not deleted):** it was
+  not a leftover waiting to be translated, it was the chosen working language of the
+  output. The author's
   reason, verbatim: *"l'italiano è stato scelto perché rende di più i concetti e
   per mia necessità mi da uno spunto in più di espressione"*. It carries the
   concepts better, and it hands him one more cue to express himself. Translating
@@ -240,9 +243,9 @@ author's own request, because the wording is more precise than a paraphrase.
 - **Kept as quotes:** the verbatim author quotes in this file stay in Italian,
   marked as quotes. They are the record of what was asked; translating them would
   forge it.
-- **Rejected: translating the example draft.** `posts/2026-11-25-*.md` is a real
-  draft written for an Italian audience. Its value as an example is that it is
-  genuine, and a translated fake would be worth less.
+- **Superseded: the example draft.** `posts/2026-11-25-*.md` was written for an
+  Italian audience; when the post moved to English (§21) it was rewritten by hand,
+  not machine-translated, so the example stays genuine.
 
 ## 17. The draft ships an image prompt, not an image
 
@@ -251,16 +254,16 @@ author's own request, because the wording is more precise than a paraphrase.
   al post"*, plus *"lascia anche un .md per gli agenti in cui gli spieghi come
   usarlo e spiegalo anche nella facciata della repo"*.
 - **Choice:** every draft ends with an `## Image prompt` block — the prompt (one
-  indented line, English), the alt text (Italian, max 120 characters) and the
+  indented line, English), the alt text (English, max 120 characters) and the
   aspect. `check_post.py` refuses a draft without it. The prompt is written, the
   image is not generated.
 - **Reconciliation with §10:** §10 said images are the last priority and no image
   backend is configured here. Both still hold. What changed is that the cheap half
   of the image stage is now mechanical: the prompt travels into whatever tool the
   author picks, so the choice of model, licence and look stays his.
-- **Why English for the prompt, Italian for the alt text:** image models are
-  trained on English captions. The alt text is read aloud to an Italian audience,
-  on an Italian post, so it is Italian.
+- **Why English for the prompt and the alt text:** image models are trained on
+  English captions, and the post is English, so a screen reader reads the alt text on
+  the same English post. (Was Italian until §21.)
 - **Why a fixed house style:** coherence across posts comes from the constant part
   (medium, palette, light, framing, what is absent, mood), not from a long prompt.
   Only the subject changes per post. The table lives in `IMAGE-PROMPTS.md`; change
@@ -322,4 +325,42 @@ author's own request, because the wording is more precise than a paraphrase.
 - **Kept on purpose:** the `LICENSE` copyright holder. It is identity, not a
   credential, and a public repository already exposes its owner. Changing it is a
   license change, not a hygiene fix.
+
+## 20. Sources move to the first comment
+
+- **Decided by:** Human, verbatim: *"le risorse le mettiamo nel primo commento (lo
+  facciamo presente nel post che le reference/source saranno nel primo commento)"*.
+- **Choice:** the post body carries no URL and no source block. The sources travel in
+  a `## First comment` section — name, date, URL, and the claim each one backs — meant
+  to be pasted as the first comment under the post. The post ends with one line saying
+  the sources are in the first comment. `check_post.py` requires the section, at least
+  one URL inside it, and that pointer line in the body.
+- **Why:** a URL in the body eats characters the post needs, and a link in the first
+  comment is where a reader who is already engaged actually clicks. Moving the sources
+  down frees the whole body for the argument; the pointer line keeps them discoverable
+  without spending a line on them.
+- **What still holds:** the rule that a source which does not hold up its claim means
+  the claim is dropped. Only the placement changed.
+- **LinkedIn ceilings, verified November 2026:** post 3000 characters, comment 1250.
+  940 is not a LinkedIn limit — the feed folds a post after roughly 210 characters,
+  which is where the hook has to land. The figures come from third-party LinkedIn
+  guides read through search results, because `web_extract` is down here (§12): the
+  platform's own help page was reached through snippets, not read in full.
+
+## 21. The post is written in English
+
+- **Decided by:** Human, verbatim: *"il post generato deve essere in inglese"*. This
+  supersedes §11 and the Italian-draft part of §16.
+- **Choice:** the post, the research and the first comment are all English. The seed
+  stays verbatim in whatever language the author wrote it — it is frontmatter data,
+  not prose. The banned-pattern list in `check_post.py` and `posts/.closers.log` are
+  English too, because that is the language they police.
+- **Why:** the post is read by an international audience, and English is the language
+  that audience and the image models share. It reverses the earlier Italian-output
+  choice on the author's call.
+- **What this costs:** the earlier rationale — Italian carries the concepts better and
+  hands the author one more cue to express himself — is retired with the decision. It
+  is recorded rather than deleted, because the reversal is itself a decision.
+- **The image prompt is outside the post:** not counted toward the 3000-character
+  limit, never pasted into LinkedIn. Only the body counts (see §17).
 

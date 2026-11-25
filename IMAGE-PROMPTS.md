@@ -130,12 +130,12 @@ genuinely effective use of the field: name the fault, not a forum's list.
   is a person's likeness. The house style's "absent" row exists for this.
 - **Disclose it.** The post already says the text was assembled by an AI. When an
   image is AI-generated, say so in the same breath — one clause is enough.
-- **Alt text, in Italian, max 120 characters.** LinkedIn supports alt text up to
+- **Alt text, in English, max 120 characters.** LinkedIn supports alt text up to
   120 characters, it cannot be added or edited after posting, and it is not
   available in the mobile apps: add it from a desktop browser while uploading.
   LinkedIn may assign alt text automatically and tell you it did — overwrite it
-  with yours. Italian because the post is Italian and a screen reader will read it
-  in Italian.
+  with yours. English because the post is English and a screen reader reads them in
+  the same language.
 - **No quality spam, no resolution claims, no stacked adjectives.** "4K ultra HD",
   "beautiful stunning gorgeous": the guides say they are noise, and they bias
   toward oversaturated output.
@@ -179,8 +179,8 @@ Prompt for `posts/2026-11-25-automatizzare-i-processi-it-con-gli-llm.md`:
     space on the right. Slate grey and off-white palette with one amber accent,
     calm and slightly dry. No text, no logos, no people.
 
-Alt text (Italian, 106 characters): `Un nastro trasportatore su una scrivania
-spinge tre scatole di cartone, l'ultima scivola fuori dal nastro.`
+Alt text (English, 103 characters): `A conveyor belt on a desk pushes three
+cardboard boxes, the last one slides off the belt.`
 
 ## Sources
 

@@ -3,8 +3,9 @@
 Turns one raw thought into a cited LinkedIn post draft. It does not publish:
 the author approves the draft and posts it by hand.
 
-The tool is deliberately small. One thought in, one markdown file out, with
-every figure in the text traceable to a source.
+The tool is deliberately small. One thought in, one markdown file out — the post,
+the first comment with the sources, and an image prompt — with every figure in the
+post traceable to a source listed in the first comment.
 
 ## Status
 
@@ -14,7 +15,8 @@ Two parts, either of which works on its own.
 the `linkedin-post` skill, which lives in this repo at `skills/linkedin-post/`. It
 uses the agent's native web search tool, drafts with the `comedic-voice` skill
 (`skills/comedic-voice/`), always passes the text through `humanizer`, and saves
-the draft under `posts/`, image prompt included. Zero dependencies, zero keys.
+the draft under `posts/`, sources comment and image prompt included. Zero
+dependencies, zero keys.
 
 This repo is the single source of truth for those two skills: they are not copied
 into the agent profile, the profile points here with symlinks (see Installation).
@@ -62,25 +64,33 @@ author's own agent config, so it is documented here but set by hand.
 
 ## How a post is built
 
-    seed  ->  research  ->  draft  ->  humanize  ->  image prompt  ->  gate  ->  posts/*.md  ->  manual publish
+    seed -> research -> draft -> humanize -> first comment -> image prompt -> gate -> posts/*.md -> manual publish
+
+Three parts come out of the pipeline, and only the first counts toward LinkedIn's
+3000-character cap. The **first comment** carries the sources (LinkedIn caps a
+comment at 1250 characters) and the post points to it. The **image prompt** is
+never published and is not counted at all.
 
 1. **Seed.** The author's thought, captured verbatim. If it is missing, the tool
    asks for it instead of inventing a topic.
 2. **Research.** Real web search for figures that support, quantify or contradict
    the thought. Nothing is cited from memory.
-3. **Draft.** Written in Italian with the `comedic-voice` skill active (humor
-   theory, stand-up structure, tone by register). Italian is a choice, not a
-   leftover: it carries the concepts better and gives the author one more cue to
-   express himself.
+3. **Draft.** Written in English with the `comedic-voice` skill active (humor
+   theory, stand-up structure, tone by register). The body carries no URL and no
+   source block: the sources go to the first comment, and the post ends by saying
+   so.
 4. **Humanize.** Mandatory pass through the `humanizer` skill. Not optional.
-5. **Image prompt.** The draft ends with the prompt to use for the post's image,
+5. **First comment.** The sources — name, date, URL and the claim each backs —
+   gathered under a `## First comment` heading, ready to paste under the post.
+6. **Image prompt.** The draft ends with the prompt to use for the post's image,
    with its alt text and its aspect. Written, not generated: the author pastes it
-   into whatever image model he uses. The guide is
-   [IMAGE-PROMPTS.md](IMAGE-PROMPTS.md).
-6. **Gate.** `check_post.py` verifies the draft mechanically, image prompt
-   included. It must exit 0.
-7. **Publish.** The author copies the draft into LinkedIn. On publication the
-   closing line is registered in `posts/.closers.log` so it can never be reused.
+   into whatever image model he uses. It is outside the post and its character
+   count. The guide is [IMAGE-PROMPTS.md](IMAGE-PROMPTS.md).
+7. **Gate.** `check_post.py` verifies the draft mechanically, image prompt and
+   first comment included. It must exit 0.
+8. **Publish.** The author copies the post and the first comment into LinkedIn. On
+   publication the closing line is registered in `posts/.closers.log` so it can
+   never be reused.
 
 ## The image prompt
 
@@ -90,14 +100,14 @@ Every draft ends with a block like this, and the gate refuses a draft without it
 
         A photo of an editorial still life on a matte grey desk, 4:5: a short mechanical conveyor carrying three plain cardboard boxes, a small brass gate at the end of the belt holding back the last one. Off-white wall behind, soft diffused light from the left, 50mm lens, shallow depth of field, subject off-centre with empty space on the right. Slate grey and off-white palette with one amber accent, calm and slightly dry. No text, no logos, no people.
 
-    **Alt text** (Italian, max 120 characters): Un nastro trasportatore su una scrivania con tre scatole di cartone: un cancelletto di ottone ferma l'ultima.
+    **Alt text** (English, max 120 characters): A conveyor belt on a desk pushes three cardboard boxes; a small brass gate holds the last one back.
 
     **Aspect** 4:5 (1080x1350) · **Negative** (only where the model has the field): blurry, low quality, jpeg artifacts, watermark, signature
 
 Copy the indented line into any image model — a chat model, Midjourney, FLUX,
 Stable Diffusion — and you get a picture that belongs to the post. It is written
-in English because that is what image models are trained on. The alt text is
-Italian because the post is Italian and a screen reader will read it in Italian.
+in English because that is what image models are trained on, and so is the alt
+text, which a screen reader reads on the same English post.
 
 The images stay coherent across posts because the prompt is not invented from
 scratch each time: a fixed house style (medium, palette, light, framing, what is

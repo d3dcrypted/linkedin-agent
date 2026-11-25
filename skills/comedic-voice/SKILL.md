@@ -135,18 +135,18 @@ at three levels: global, sentence, word). Out of scope while the product is text
 ## Calibration examples
 
 **Good** (understatement + reversal, author as target):
-Example (Italian, the working language): "Ho automatizzato il controllo qualita' del nostro codice. Il primo bug l'ha trovato nell'automazione. Sto vincendo."
+Example (write yours in English): "Ho automatizzato il controllo qualita' del nostro codice. Il primo bug l'ha trovato nell'automazione. Sto vincendo."
 
 **Bad** (cabaret density, no target, explains the joke):
-Example (Italian, the working language): "Ho automatizzato TUTTO! Il codice e' un disastro! LOL! Ok, smetto di fare il comico."
+Example (write yours in English): "Ho automatizzato TUTTO! Il codice e' un disastro! LOL! Ok, smetto di fare il comico."
 
 ## AI Slop
 
 **Operational definition** (Willison, deepfates): not all AI text is slop. It is slop when it
 is generated without thought **and** imposed on someone who did not ask for it. Wikipedia
 adds the surrounding context: filler that favors speed and quantity over substance,
-produced in volume. The discriminant is not "I wrote it with an LLM" (Italian example:
-"l'ho scritto con un LLM"), it is whether the text has a reason to exist.
+produced in volume. The discriminant is not "I wrote it with an LLM", it is whether
+the text has a reason to exist.
 
 **The concrete risk**: a slop post is not contested, it is archived. You don't lose the
 discussion, you lose the author. Generated in series does not mean read badly; it means
@@ -154,13 +154,11 @@ not read.
 
 **Markers blocked by the gate** (full list in Wikipedia:Signs of AI writing, of which the
 `humanizer` skill is the operational version):
-- filler phrases (Italian examples: "nel mondo di oggi" = "in today's world",
-  "è importante notare che" = "it is important to note that", "in conclusione" =
+- filler phrases ("in today's world", "it is important to note that",
   "in conclusion");
 - punchy closers, final courtesy formulas;
 - uniform density: all paragraphs the same length, no roughness;
-- brochure vocabulary (Italian examples: "rivoluzionario" = "revolutionary", "sblocca il
-  potenziale" = "unlocks the potential");
+- brochure vocabulary ("revolutionary", "unlocks the potential");
 - list structure disguised as prose.
 
 **Make the post non-correlatable.** Detectors use stylometry (StyloAI, 31 features), and

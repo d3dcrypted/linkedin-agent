@@ -20,7 +20,7 @@ Generate {n} short and specific web search queries to find recent data and
 reliable sources that support, quantify or contradict that thought.
 Rules: in English (wider coverage), no explanations, ONE query per line."""
 
-P_WRITER = """You are a LinkedIn ghostwriter. Write in Italian, first person, dry and
+P_WRITER = """You are a LinkedIn ghostwriter. Write in ENGLISH, first person, dry and
 concrete tone, like a technical person with hands on the tools. No fluff,
 no "in a world where", no decorative emoji, no hashtag clusters.
 
@@ -28,11 +28,16 @@ Structure:
 - First line = hook (max 12 words, it has to stop the scroll).
 - 3-6 SHORT paragraphs (1-3 sentences), separated by a blank line.
 - Close with a practical takeaway or a blunt question.
-- At the bottom, a "Fonti:" section (Italian for "Sources") with only the URLs actually used.
+- Then a short self-deprecating line: the thought is a human's, the text was
+  assembled by an AI.
+- Then, on its own last line: "Sources in the first comment."
 
 HARD RULES:
 - Use ONLY facts contained in the SOURCES below. If a source is useless, do not cite it.
 - Do NOT invent numbers, dates, names or statistics that are not in the sources.
+- Do NOT put URLs or a sources block in the body: the sources go in the first
+  comment, added separately.
+- No em dash, no en dash, no curly quotes, no exclamation mark. Stay under 3000 characters.
 - If the sources are not enough to support a claim, drop the claim."""
 
 P_IMAGE = """You write the image prompt for the LinkedIn post below. Full guide: IMAGE-PROMPTS.md.
@@ -47,7 +52,7 @@ diagram, not a person.
 
 Reply with exactly three lines, nothing else, no labels:
 1. the prompt: ONE line, 30-80 words, English, starting with "A photo of", naming the 4:5 ratio
-2. the alt text: Italian, at most 120 characters, describing only what is visible
+2. the alt text: English, at most 120 characters, describing only what is visible
 3. the negative prompt: five to eight short English terms"""
 
 
@@ -213,16 +218,18 @@ def main():
     lines = [l.strip() for l in llm([{"role": "user", "content": P_IMAGE + "\n\nPOST:\n" + post}],
                                     a.model, 0.4, 400).splitlines() if l.strip()] + ["", "", ""]
     prompt, alt, neg = (re.sub(r"^\d[.)]\s*", "", l) for l in lines[:3])
-    block = (f"\n## Image prompt\n\n    {prompt}\n\n"
-             f"**Alt text** (Italian, max 120 characters): {alt}\n\n"
+    comment = "## First comment\n\nSources:\n" + "\n".join(f"- {s['url']}" for s in srcs)
+    block = (f"\n{comment}\n\n## Image prompt\n\n    {prompt}\n\n"
+             f"**Alt text** (English, max 120 characters): {alt}\n\n"
              f"**Aspect** 4:5 (1080x1350) · **Negative** (only where the model has the field): {neg}\n")
 
     os.makedirs(a.out, exist_ok=True)
     slug = re.sub(r"[^a-z0-9]+", "-", a.seed.lower())[:40].strip("-")
     path = os.path.join(a.out, f"{datetime.date.today()}-{slug}.md")
+    fm_sources = "".join(f"  - {s['url']}\n" for s in srcs)
     open(path, "w", encoding="utf-8").write(
-        f"---\ndate: {datetime.date.today()}\nstatus: draft\n"
-        f"model: {a.model}\nsources: {len(srcs)}\n---\n\n{post}\n{block}")
+        f"---\ndate: {datetime.date.today()}\nstatus: draft\nmodel: {a.model}\n"
+        f"seed: {json.dumps(a.seed, ensure_ascii=False)}\nsources:\n{fm_sources}---\n\n{post}\n{block}")
     print("\n" + "═" * 60 + f"\n{post}\n{block}" + "═" * 60)
     print(f"\ndraft saved: {path}", file=sys.stderr)
 

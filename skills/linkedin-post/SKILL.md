@@ -13,108 +13,111 @@ metadata:
 
 # LinkedIn Post Skill
 
-Trasforma un pensiero grezzo dell'autore in una bozza di post LinkedIn sostenuta
-da fonti reali e citate. Salva la bozza su disco. **Non pubblica** — la
-pubblicazione è manuale, l'autore copia e incolla.
+Turns one raw thought from the author into a LinkedIn post draft backed by real,
+cited sources. Saves the draft to disk. **Does not publish** — publishing is
+manual, the author copies and pastes.
 
 ## When to Use
 
-- L'utente chiede "fammi/scrivimi un post LinkedIn su <pensiero>"
-- L'utente passa un pensiero e chiede di "enfatizzarlo con ricerche attendibili"
-- Don't use for: post senza ricerca richiesta, commenti brevi, pubblicazione
-automatica (non supportata: l'API LinkedIn richiede app approvata e viola le
-ToS se automatizzata via browser).
+- The user asks "write me a LinkedIn post about <thought>" — example (Italian,
+  the working language): "fammi/scrivimi un post LinkedIn su <pensiero>"
+- The user hands over a thought and asks to "back it up with reliable research" —
+  example (Italian, the working language): "enfatizzarlo con ricerche attendibili"
+- Don't use for: posts without requested research, short comments, automatic
+  publishing (not supported: the LinkedIn API requires an approved app and
+  violates the ToS if automated through a browser).
 
 ## Prerequisites
 
-- `web_search` e `web_extract` (nativi). Nessuna chiave, nessun pacchetto.
-- L'autore scrive in italiano: il post è in italiano, le ricerche in inglese
-  (copertura maggiore).
+- `web_search` and `web_extract` (native). No key, no package.
+- The author writes in Italian: the post is in Italian, the research in English
+  (broader coverage).
 
 ## Procedure
 
-1. **Cattura il seed.** Il pensiero va preso **verbatim**. Se manca o è vuoto,
-   chiedi solo quello, senza inventare un tema. Criterio: hai il testo esatto
-   dell'autore.
-2. **Ricerca.** 3-5 `web_search` mirate (in inglese) per trovare dati che
-   sostengano, quantifichino o contraddicano il pensiero. Poi `web_extract` sulle
-   2-4 fonti migliori. Criterio: **≥3 fatti, ognuno con il suo URL, e ogni URL
-   effettivamente estratto** — mai citare da memoria.
-3. **Bozza.** Scrivi il post con la skill `comedic-voice` attiva e con le regole
-   di voce qui sotto. Una sola struttura comica per beat, 1-2 risate vere nel
-   testo, il resto e' tono. Criterio: ogni numero, data o nome ha una micro-fonte
-   **inline** `(Ente, anno)` dentro la frase che lo usa; se una fonte non regge
-   un'affermazione, elimini l'affermazione.
-4. **Umanizza — SEMPRE, non opzionale.** Applica la skill `humanizer` al testo
-   della bozza. Il post non si salva prima di essere passato da lì. Se la bozza
-   è scritta bene, il passaggio cambia poco; se ha i tell classici, li toglie.
-   **Eccezione: le figure comiche deliberate** (regola del tre, understatement,
-   callback, ribaltamento) restano. L'humanizer colpisce il pattern che si è
-   scelto da solo, non il dispositivo scelto a mano.
-   Criterio: significato intatto e tutte le micro-fonti inline ancora presenti.
-5. **Salva.** `write_file` in `~/projects/linkedin-agent/posts/<AAAA-MM-GG>-<slug>.md`
-   con frontmatter: `date`, `status: draft`, `seed`, `sources` (lista URL). Poi
-   lancia `python3 ~/projects/linkedin-agent/check_post.py <file>`: deve uscire 0.
-   Criterio: il file esiste, il check passa.
-6. **Consegna.** Stampa il post e il path. L'autore pubblica a mano. **A
-   pubblicazione avvenuta**, registra la chiusura usata:
-   `python3 ~/projects/linkedin-agent/check_post.py <file> --log`. È questo che rende
-   impossibile ripetere la stessa forma nel post successivo.
-   Criterio: la riga esiste in `posts/.closers.log`.
+1. **Capture the seed.** Take the thought **verbatim**. If it's missing or empty,
+   ask for that alone, don't invent a topic. Criterion: you have the author's
+   exact text.
+2. **Research.** 3-5 targeted `web_search` calls (in English) to find data that
+   supports, quantifies or contradicts the thought. Then `web_extract` on the
+   2-4 best sources. Criterion: **≥3 facts, each with its own URL, and every URL
+   actually extracted** — never cite from memory.
+3. **Draft.** Write the post with the `comedic-voice` skill active and the voice
+   rules below. One comic structure per beat, 1-2 real laughs in the text, the
+   rest is tone. Criterion: every number, date or name has an **inline**
+   micro-source `(Body, year)` inside the sentence that uses it; if a source
+   doesn't hold up a claim, you drop the claim.
+4. **Humanize — ALWAYS, not optional.** Apply the `humanizer` skill to the draft
+   text. The post isn't saved before it has been through that. If the draft is
+   well written, the pass changes little; if it has the classic tells, it removes
+   them. **Exception: deliberate comic devices** (rule of three, understatement,
+   callback, reversal) stay. The humanizer hits the pattern you chose on your
+   own, not the device you picked by hand.
+   Criterion: meaning intact and all inline micro-sources still there.
+5. **Save.** `write_file` to `~/projects/linkedin-agent/posts/<YYYY-MM-DD>-<slug>.md`
+   with frontmatter: `date`, `status: draft`, `seed`, `sources` (list of URLs).
+   Then run `python3 ~/projects/linkedin-agent/check_post.py <file>`: it must
+   exit 0. Criterion: the file exists, the check passes.
+6. **Deliver.** Print the post and the path. The author publishes by hand.
+   **Once published**, log the closer used:
+   `python3 ~/projects/linkedin-agent/check_post.py <file> --log`. That's what makes
+   it impossible to repeat the same shape in the next post.
+   Criterion: the line exists in `posts/.closers.log`.
 
-### Regole di voce (ghostwriter)
+### Voice Rules (ghostwriter)
 
-- Prima persona, tono asciutto ma **autoironico**: una persona tecnica che sa
-  fare il suo lavoro e non si prende troppo sul serio. Mai formale, mai fuffa
-  motivazionale, mai "in un mondo in cui".
-- **REGOLA PRINCIPALE — disclaimer autoironico, sempre.** Il post dichiara in
-  modo scherzoso che il pensiero è di un umano, ma il testo è stato messo
-  insieme da una AI. Va **dentro** il testo, non come nota legale in fondo.
-  Registro (adattane uno, non copiarli tutti):
-  - "Pensato da un umano, montato da una AI. Il pensiero è mio, le virgole sono negoziabili."
-  - "Nessuna AI è stata maltrattata nella stesura di questo post."
-  - "Pensiero mio, dattilografia altrui. Il grafico prendetelo sul serio, il tono no."
-  **Mai la stessa forma due volte**: la chiusura si riscrive ogni volta, ed è la
-  parte che `check_post.py` confronta con `posts/.closers.log` (difflib ≥ 0.7).
-  Una frase identica in ogni post è la firma più facile da correlare: chi legge
-  due post la riconosce, e qualsiasi rilevatore la trova.
-- **RISORSE SEMPRE NEL TESTO.** Ogni dato ha la sua fonte **inline**, in forma
-  minima tra parentesi: `(BSI, 2025)` o `(Paligo, ott. 2026)`. Mai blocco
-  `Fonti:` a fondo, mai URL lunghi nel corpo — rubano spazio e scroll. La fonte
-  sta dentro la frase che usa il dato.
-- Prima riga = hook, max ~12 parole, deve fermare lo scroll.
-- Almeno una catch phrase che dice una cosa seria con faccia seria, ma senza
-  prendersi troppo sul serio.
-- 3-6 paragrafi brevi (1-3 frasi), separati da riga vuota.
-- Chiudi con una takeaway pratica o una domanda secca.
-- Niente emoji decorative, niente grappoli di hashtag.
+- First person, dry but **self-deprecating** tone: a technical person who knows
+  their job and doesn't take themselves too seriously. Never formal, never
+  motivational fluff, never "in a world where".
+- **MAIN RULE — self-deprecating disclaimer, always.** The post states jokingly
+  that the thought is a human's, but the text was put together by an AI. It goes
+  **inside** the text, not as a legal note at the bottom.
+  Register (adapt one, don't copy them all):
+  - Example (Italian, the working language): "Pensato da un umano, montato da una AI. Il pensiero è mio, le virgole sono negoziabili."
+  - Example (Italian, the working language): "Nessuna AI è stata maltrattata nella stesura di questo post."
+  - Example (Italian, the working language): "Pensiero mio, dattilografia altrui. Il grafico prendetelo sul serio, il tono no."
+  **Never the same shape twice**: the closer is rewritten every time, and it's the
+  part `check_post.py` compares against `posts/.closers.log` (difflib ≥ 0.7).
+  An identical sentence in every post is the easiest signature to correlate:
+  anyone reading two posts recognises it, and any detector finds it.
+- **SOURCES ALWAYS IN THE TEXT.** Every data point has its source **inline**, in
+  minimal parenthetical form: `(BSI, 2025)` or `(Paligo, ott. 2026)`. Never a
+  `Sources:` block at the bottom, never long URLs in the body — they steal space
+  and scroll. The source sits inside the sentence that uses the data.
+- First line = hook, max ~12 words, it has to stop the scroll.
+- At least one catch phrase that says something serious with a straight face, but
+  without taking itself too seriously.
+- 3-6 short paragraphs (1-3 sentences), separated by a blank line.
+- Close with a practical takeaway or a blunt question.
+- No decorative emoji, no hashtag clusters.
 
 ## Quick Reference
 
-    web_search(query="...", limit=3)      # ricerca, in inglese
-    web_extract(urls=[...])                # testo pulito delle fonti
+    web_search(query="...", limit=3)      # search, in English
+    web_extract(urls=[...])                # clean text from the sources
     write_file(path="~/projects/linkedin-agent/posts/...", content="...")
 
 ## Pitfalls
 
-- **Mai inventare statistiche.** Il valore della pipeline è che i numeri sono
-  veri e citati. Un post senza fonti è peggio di nessun post.
-- Il backend di ricerca a volte fallisce una singola chiamata: ritenta una volta
-  con una query riformulata prima di dichiarare il fallimento.
-- PDF e pagine dietro login possono estrarre male: preferisci articoli/report HTML.
-- Non generare immagini di default: è l'ultima priorità, fallo solo se richiesto.
+- **Never invent statistics.** The value of the pipeline is that the numbers are
+  real and cited. A post without sources is worse than no post.
+- The search backend sometimes fails a single call: retry once with a reworded
+  query before declaring the failure.
+- PDFs and pages behind a login can extract badly: prefer HTML articles/reports.
+- Don't generate images by default: it's the lowest priority, do it only if asked.
 
 ## Verification
 
-- `python3 ~/projects/linkedin-agent/check_post.py <file>` esce 0: em dash, en
-  dash, virgolette curve, punto esclamativo, emoji, maiuscole urlate, "non è X,
-  è Y", frasi da slop ("nel mondo di oggi", "è importante notare che",
-  "rivoluzionario", "in conclusione"), disclaimer mancante, fonti mancanti,
-  chiusura riusata: tutti bloccati.
-- La chiusura non è una delle forme già usate (`posts/.closers.log`).
-- Applicata la skill `humanizer` (passo 4).
-- Ogni numero nel post ha la sua micro-fonte inline `(Ente, anno)` — nessun
-  blocco `Fonti:` a fondo.
-- Il post contiene il disclaimer autoironico "pensiero umano / assemblaggio AI".
-- Il file di bozza esiste nel path atteso con `status: draft`.
-- L'output è in italiano, prima persona, senza hashtag a grappolo.
+- `python3 ~/projects/linkedin-agent/check_post.py <file>` exits 0: em dash, en
+  dash, curly quotes, exclamation mark, emoji, shouting caps, "non è X, è Y"
+  (Italian, the working language: "not X, it's Y"),
+  slop phrases (Italian strings it matches: "nel mondo di oggi", "è importante
+  notare che", "rivoluzionario", "in conclusione"), missing disclaimer, missing
+  sources, reused closer: all blocked.
+- The closer is not one of the shapes already used (`posts/.closers.log`).
+- The `humanizer` skill was applied (step 4).
+- Every number in the post has its inline micro-source `(Body, year)` — no
+  `Sources:` block at the bottom.
+- The post contains the self-deprecating "human thought / AI assembly" disclaimer.
+- The draft file exists at the expected path with `status: draft`.
+- The output is in Italian, first person, with no hashtag cluster.

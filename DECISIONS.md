@@ -214,3 +214,25 @@ author's own request, because the wording is more precise than a paraphrase.
   rules were rewritten. Recorded because the list is derived from that source.
 - The humor and tone rules in `comedic-voice` summarise published research, cited
   in that skill's own Sources section. Summaries, not reproductions.
+
+## 16. One language for the tree: English, except what is Italian by design
+
+- **Decided by:** Human, verbatim: *"aggiorna quello che è rimasto appeso e
+  traducilo in inglese"*.
+- **Choice:** every artifact in the committed tree is English: README, this file,
+  code comments, docstrings, printed output, `--help`, and the instructions of
+  both skills. Italian survives in exactly three places: the drafts under
+  `posts/`, the closing-line log `posts/.closers.log`, and the banned-pattern
+  regular expressions in `check_post.py`.
+- **Why:** Italian is the *output* language of the product, not the language of
+  the code. A reader who does not read Italian can still audit and reuse the gate
+  and the skills. The parts left in Italian are data, not prose: the drafted text,
+  the closing lines already published, and the patterns that must match Italian
+  sentences to be useful at all.
+- **Kept as quotes:** the verbatim author quotes in this file stay in Italian,
+  marked as quotes. They are the record of what was asked; translating them would
+  forge it.
+- **Rejected: translating the example draft.** `posts/2026-11-25-*.md` is a real
+  draft written for an Italian audience. Its value as an example is that it is
+  genuine, and a translated fake would be worth less.
+

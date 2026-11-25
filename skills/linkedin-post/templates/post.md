@@ -1,17 +1,17 @@
 ---
-date: AAAA-MM-GG
+date: YYYY-MM-DD
 status: draft
-seed: "<pensiero verbatim dell'autore>"
+seed: "<author's verbatim thought>"
 sources:
   - https://...
 ---
 
-<hook autoironico, max 12 parole>
+<self-deprecating hook, max 12 words>
 
-<paragrafo: dato con micro-fonte inline, es. "... il 70,1% (Paligo, 2026)">
+<paragraph: data point with inline micro-source, e.g. (Italian, the working language): "... il 70,1% (Paligo, 2026)">
 
-<paragrafo con catch phrase seria-ma-non-troppo>
+<paragraph with a serious-but-not-too-serious catch phrase>
 
-<takeaway o domanda secca>
+<takeaway or blunt question>
 
-<disclaimer autoironico: pensiero umano, assemblaggio AI>
+<self-deprecating disclaimer: human thought, AI assembly>

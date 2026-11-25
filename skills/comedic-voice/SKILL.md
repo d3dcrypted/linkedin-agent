@@ -12,184 +12,182 @@ metadata:
 
 # Comedic Voice
 
-Fa ridere **di mestiere**, non di improvvisazione. Stand-up scritto, non cabaret.
-Un post che fa ridere una volta su dieci battute e' peggio di uno serio: il
-lettore capisce che stai provando.
+Make people laugh **by craft**, not by improvisation. Written stand-up, not cabaret.
+A post that gets a laugh once in every ten jokes is worse than a serious one: the
+reader realizes you're trying.
 
 ## When to Use
 
-- Quando un testo deve risultare ironico, sarcastico o dissacrante, ma credibile.
-- Quando serve alternare tono serio e tono comico nella stessa pagina.
-- Don't use when: il contenuto e' una brutta notizia, un dato clinico, un
-  messaggio di errore. Li' il tono e' piatto per scelta.
+- When a text must come across as ironic, sarcastic or irreverent, but credible.
+- When you need to alternate a serious tone and a comic tone on the same page.
+- Don't use when: the content is bad news, clinical data, an error message. There the
+  tone is flat on purpose.
 
-## La teoria (perche' funziona)
+## Theory (why it works)
 
-**Benign Violation Theory** (McGraw, Warren): l'umorismo scatta quando tre
-condizioni valgono insieme: c'e' una violazione (qualcosa che stona con come il
-mondo dovrebbe andare), la violazione e' percepita benigna, e le due percezioni
-coesistono. Fallisce in due modi: troppo timida (nessuna violazione, nessuna
-risata) o troppo spinta (violazione maligna, imbarazzo).
+**Benign Violation Theory** (McGraw, Warren): humor triggers when three conditions hold
+together: there is a violation (something that clashes with how the world should work),
+the violation is perceived as benign, and the two perceptions coexist. It fails in two
+ways: too timid (no violation, no laugh) or too pushed (malignant violation, embarrassment).
 
-Tre leve per rendere benigna una violazione:
-1. **Norme alternative**: la frase ha un secondo senso che regge (e' il
-   meccanismo del doppio senso, ma anche della battuta tecnica).
-2. **Distanza psicologica**: "la commedia e' tragedia piu' tempo". Un disastro
-   di tre anni fa e' materiale, quello di ieri no.
-3. **Adesione alla norma violata**: ride chi condivide la norma. Per questo il
-   pubblico giusto e' quello che sa di cosa parli.
+Three levers to make a violation benign:
+1. **Alternative norms**: the sentence has a second meaning that holds up (this is the
+   mechanism of the double meaning, but also of the technical joke).
+2. **Psychological distance**: "comedy is tragedy plus time" (Italian rendering:
+   `"la commedia e' tragedia piu' tempo"`). A disaster from three years ago is material;
+   yesterday's is not.
+3. **Adherence to the violated norm**: the people who share the norm are the ones who
+   laugh. That is why the right audience is the one that knows what you're talking about.
 
-**Incongruity-resolution**: non e' l'incongruenza che fa ridere, e' la sua
-*risoluzione*, il momento in cui il lettore capisce. Conseguenza pratica: il
-setup deve essere abbastanza vago da permettere il ribaltamento, e la battuta
-non si spiega mai.
+**Incongruity-resolution**: it is not the incongruity that makes people laugh, it is its
+*resolution*, the moment the reader gets it. Practical consequence: the setup must be vague
+enough to allow the flip, and the joke is never explained.
 
-**Ironia vs sarcasmo** (Partridge): l'ironia dice il contrario di cio' che
-intende; il sarcasmo e' la sua versione intenzionale e critica, alternativa al
-rimprovero diretto. Il sarcasmo pungente in un post pubblico si usa solo verso
-se' stessi o verso la propria categoria, mai verso il lettore.
+**Irony vs sarcasm** (Partridge): irony says the opposite of what it means; sarcasm is its
+intentional and critical version, an alternative to direct reproach. Biting sarcasm in a
+public post is used only against yourself or your own category, never against the reader.
 
-## Il mestiere (come si scrive)
+## The craft (how to write it)
 
-Unita' minima: **premessa** (il tema), **setup** (crea l'attesa), **punchline**
-(la ribalta), **tag** (estende la risata con una seconda battuta sullo stesso
-setup).
+Minimum unit: **premise** (the theme), **setup** (creates expectation), **punchline**
+(the payoff), **tag** (extends the laugh with a second joke on the same setup).
 
-Le 7 strutture. Usane **una** per beat, non tutte insieme:
+The 7 structures. Use **one** per beat, not all of them together:
 
-| Struttura | Meccanismo |
+| Structure | Mechanism |
 |---|---|
-| Misdirection | il setup punta a A, la punchline atterra su B |
-| Regola del tre | due elementi coerenti, il terzo sfasa |
-| Callback | riprendi una parola dell'apertura alla chiusura |
-| Reversal | ribalti l'aspettativa su se' stessa (io sono il problema) |
-| Analogia | accosti il tecnico a qualcosa di quotidiano |
-| Esagerazione | porti il difetto a conseguenze assurdamente precise |
-| Understatement | dici meno di quanto la situazione meriti |
+| Misdirection | the setup points to A, the punchline lands on B |
+| Rule of three | two consistent elements, the third throws it off |
+| Callback | repeat a word from the opening in the closing |
+| Reversal | you flip the expectation onto yourself (I am the problem) |
+| Analogy | pair the technical topic with something everyday |
+| Exaggeration | push the flaw to absurdly precise consequences |
+| Understatement | say less than the situation deserves |
 
-Nel testo l'interruzione di riga **e'** il tempo. Una frase breve dopo una lunga
-e' una punchline: non serve altro per marcare il beat.
+In text, the line break **is** the timing. A short sentence after a long one is a
+punchline: nothing else is needed to mark the beat.
 
-Densita': **1-2 risate vere per testo**, non dieci. Il resto e' tono. In un post
-la struttura giusta e' un *tight five* ridotto: apri con la battuta discreta,
-chiudi con la migliore (mai aprirsi con la piu' forte).
+Density: **1-2 real laughs per text**, not ten. The rest is tone. In a post, the right
+structure is a reduced *tight five*: open with the discreet joke, close with the best one
+(never open with the strongest).
 
-## Anti-pattern (i tell del cabaret)
+## Anti-patterns (the tells of cabaret)
 
-- Punto esclamativo, emoji, "LOL", maiuscole per ridere.
-- Densita' cabaret: una battuta per frase. Fa rima con l'imbarazzo.
-- Assurdita' senza premessa: e' il non-sequitur, non la battuta.
-- Spiegare la battuta, o dichiarare che stai scherzando ("ovviamente", "si fa per dire").
-- Battuta sui dati: il numero e' sacro, si puo' solo incorniciare. Mai farne la punchline.
-- Pubblico sbagliato: la vittima e' sempre tu o la tua categoria, mai il lettore, mai chi e' piu' debole.
-- Tono isterico: in testo vince il deadpan. Sotto-enuncia, non strillare.
+- Exclamation marks, emoji, "LOL", ALL CAPS for laughs.
+- Cabaret density: one joke per sentence. It rhymes with embarrassment.
+- Absurdity without a premise: that is the non-sequitur, not the joke.
+- Explaining the joke, or declaring that you're kidding ("ovviamente" = "obviously",
+  "si fa per dire" = "figuratively speaking"; Italian examples).
+- Joke about data: the number is sacred, you can only frame it. Never make it the punchline.
+- Wrong audience: the victim is always you or your category, never the reader, never
+  whoever is weaker.
+- Hysterical tone: in text, deadpan wins. Understate, don't shout.
 
-## Tonalità
+## Tone
 
-**Voce e tono non sono la stessa cosa.** La voce sono i tratti stabili che ti
-rendono riconoscibile in ogni testo: lessico, contrazioni, lunghezza delle frasi,
-ritmo. Il tono è l'atteggiamento verso il soggetto in quel momento. Analogia: la
-voce è lo stile del musicista, il tono è l'umore del brano. Pratica: il tono
-cambia da post a post, la voce no. Se cambia la voce, sembri un altro autore.
+**Voice and tone are not the same thing.** Voice is the stable traits that make you
+recognizable in every text: vocabulary, contractions, sentence length, rhythm. Tone is the
+attitude toward the subject at that moment. Analogy: voice is a musician's style, tone is
+the mood of the piece. In practice: tone changes from post to post, voice does not. If the
+voice changes, you sound like a different author.
 
-**Il tono si dichiara, non si allude.** In uno studio misurato su LLM (Sayem,
-EJALS) le istruzioni stilistiche esplicite hanno avuto effetti più forti dei
-segnali contestuali impliciti: prompt formali +137% di lunghezza delle frasi e
-+185% di densità di termini tecnici; prompt emotivi fino a 7,19 marcatori emotivi
-per 100 parole contro zero in condizione neutra. Tre manopole misurabili:
-lunghezza frase, densità tecnica, marcatori emotivi.
+**Declare the tone, don't allude to it.** In a study measured on LLMs (Sayem, EJALS),
+explicit stylistic instructions had stronger effects than implicit contextual signals:
+formal prompts +137% sentence length and +185% technical-term density; emotional prompts up
+to 7,19 emotional markers per 100 words versus zero in the neutral condition. Three
+measurable knobs: sentence length, technical density, emotional markers.
 
-**Tono per registro, non per aggettivi.** "Formale", "ironico", "diretto" sono
-etichette vaghe e il modello ci infila quello che vuole. Il registro (Halliday)
-ha tre assi specificabili:
-- campo: di cosa si parla (tecnico-operativo, business, personale);
-- tenore: il rapporto con chi legge (pari, esperto, venditore);
-- modo: canale e forma (post breve, prosa scritta).
-Caratterizzare il tono per registro batte le etichette sia in fedeltà al tono sia
-in conservazione del significato.
+**Tone by register, not by adjectives.** "Formal", "ironic", "direct" are vague labels and
+the model stuffs in whatever it wants. Register (Halliday) has three specifiable axes:
+- field: what is being talked about (technical-operational, business, personal);
+- tenor: the relationship with the reader (peer, expert, salesperson);
+- mode: channel and form (short post, written prose).
+Characterizing tone by register beats labels both for tone fidelity and for preservation
+of meaning.
 
-**Mappa dei toni** (un tono per beat, non tutti insieme):
+**Tone map** (one tone per beat, not all together):
 
-| Beat | Tono | Firme |
+| Beat | Tone | Markers |
 |---|---|---|
-| Apertura | asciutto | frasi corte, zero aggettivi, zero segnali |
-| Dati | piatto | frasi lunghe, densità tecnica alta, zero marcatori emotivi |
-| Turn | ironico | frase breve dopo una lunga, understatement |
-| Chiusura | asciutto | torna alla voce dell'apertura |
+| Opening | dry | short sentences, zero adjectives, zero signals |
+| Data | flat | long sentences, high technical density, zero emotional markers |
+| Turn | ironic | short sentence after a long one, understatement |
+| Closing | dry | returns to the voice of the opening |
 
-**Serio e ironico convivono solo se separati**: prima il fatto nudo, poi il
-commento. Mai i due registri nella stessa frase, altrimenti il lettore non sa
-cosa prendere sul serio. E il passaggio è il posto migliore per la battuta: la
-serietà appena stabilita è il setup.
+**Serious and ironic coexist only if separated**: first the bare fact, then the comment.
+Never both registers in the same sentence, otherwise the reader doesn't know what to take
+seriously. And the transition is the best place for the joke: the seriousness just
+established is the setup.
 
-**Cambiare tono dentro il testo.** In un testo breve il tono non gira: un cambio
-solo, ed è il turn. E il cambio deve avere una causa visibile, altrimenti il
-lettore è disorientato, non divertito. Tre modi di farlo atterrare:
-1. annunciarlo con una frase di transizione ("Qui la parte seria, perché serve");
-2. prepararlo prima, mezzo-accennando il registro che arriva mentre sei ancora
-   nell'altro (Catch-22 riprende gli stessi elementi, che diventano sempre più cupi);
-3. mai farlo rientrare: il registro serio non si richiude con una battuta nella
-   stessa frase.
+**Changing tone within the text.** In a short text the tone doesn't rotate: one change
+only, and it is the turn. The change must have a visible cause, otherwise the reader is
+disoriented, not amused. Three ways to make it land:
+1. announce it with a transition sentence (Italian example: "Qui la parte seria, perché
+   serve" = "Here's the serious part, because it's needed");
+2. prepare it, half-hinting at the register that is coming while you are still in the
+   other one (Catch-22 revisits the same elements, which become darker and darker);
+3. never let it fall back: the serious register is not closed again with a joke in the
+   same sentence.
 
-Nota: se il post diventa audio, la tonalità si sposta sulla prosodia (controllo di
-emozione e intensità a tre livelli: globale, frase, parola). Fuori scope finché il
-prodotto è testo.
+Note: if the post becomes audio, tone moves to prosody (control of emotion and intensity
+at three levels: global, sentence, word). Out of scope while the product is text.
 
-## Esempi di calibrazione
+## Calibration examples
 
-Buono (understatement + reversal, autore come bersaglio):
-"Ho automatizzato il controllo qualita' del nostro codice. Il primo bug l'ha
-trovato nell'automazione. Sto vincendo."
+**Good** (understatement + reversal, author as target):
+Example (Italian, the working language): "Ho automatizzato il controllo qualita' del nostro codice. Il primo bug l'ha trovato nell'automazione. Sto vincendo."
 
-Cattivo (densita' cabaret, nessun bersaglio, spiega la battuta):
-"Ho automatizzato TUTTO! Il codice e' un disastro! LOL! Ok, smetto di fare il
-comico."
+**Bad** (cabaret density, no target, explains the joke):
+Example (Italian, the working language): "Ho automatizzato TUTTO! Il codice e' un disastro! LOL! Ok, smetto di fare il comico."
 
 ## AI Slop
 
-**Definizione operativa** (Willison, deepfates): non tutto il testo AI è slop. Lo è
-quando è generato senza testa **e** imposto a chi non l'ha chiesto. Wikipedia aggiunge il
-contorno: riempitivo che privilegia velocità e quantità sulla sostanza, prodotto in
-volume. Il discriminante non è "l'ho scritto con un LLM", è se il testo ha un motivo per
-esistere.
+**Operational definition** (Willison, deepfates): not all AI text is slop. It is slop when it
+is generated without thought **and** imposed on someone who did not ask for it. Wikipedia
+adds the surrounding context: filler that favors speed and quantity over substance,
+produced in volume. The discriminant is not "I wrote it with an LLM" (Italian example:
+"l'ho scritto con un LLM"), it is whether the text has a reason to exist.
 
-**Il rischio concreto**: un post slop non viene contestato, viene archiviato. Non si
-perde la discussione, si perde l'autore. Generato in serie non significa letto male,
-significa non letto.
+**The concrete risk**: a slop post is not contested, it is archived. You don't lose the
+discussion, you lose the author. Generated in series does not mean read badly; it means
+not read.
 
-**Marcatori bloccati dal gate** (lista completa in Wikipedia:Signs of AI writing, di cui
-la skill `humanizer` è la versione operativa):
-- frasi di riempimento ("nel mondo di oggi", "è importante notare che", "in conclusione");
-- chiusura a effetto, formule di cortesia finali;
-- densità uniforme: paragrafi tutti lunghi uguali, nessuna asperità;
-- lessico da brochure ("rivoluzionario", "sblocca il potenziale");
-- struttura da elenco travestita da prosa.
+**Markers blocked by the gate** (full list in Wikipedia:Signs of AI writing, of which the
+`humanizer` skill is the operational version):
+- filler phrases (Italian examples: "nel mondo di oggi" = "in today's world",
+  "è importante notare che" = "it is important to note that", "in conclusione" =
+  "in conclusion");
+- punchy closers, final courtesy formulas;
+- uniform density: all paragraphs the same length, no roughness;
+- brochure vocabulary (Italian examples: "rivoluzionario" = "revolutionary", "sblocca il
+  potenziale" = "unlocks the potential");
+- list structure disguised as prose.
 
-**Rendere il post non correlabile.** I rilevatori vanno di stilometria (StyloAI, 31
-feature) e la feature più comoda è la ricorrenza. Un testo identico a se stesso in ogni
-post è il modo più rapido per farsi correlare: chi legge due post riconosce la firma, e
-qualsiasi detector la trova. Quindi:
-1. **Nessuna frase fissa, mai**, nemmeno il disclaimer. La semantica è fissata (pensiero
-   umano, assemblaggio AI), la forma si riscrive ogni volta. `check_post.py` confronta la
-   chiusura con quelle già usate (`posts/.closers.log`, similarità difflib ≥ 0.7) e blocca
-   la ripetizione.
-2. **Irregolarità**: varia la lunghezza dei paragrafi, non chiudere ogni sezione con una
-   sintesi, lascia un dettaglio troppo specifico per essere generico. La specificità non
-   si finge: è il residuo che un generatore non produce.
-3. **Attrito**: un'opinione, un numero scomodo, un nome. Il testo piatto è la firma.
+**Make the post non-correlatable.** Detectors use stylometry (StyloAI, 31 features), and
+the most convenient feature is recurrence. A text identical to itself in every post is the
+fastest way to get correlated: anyone reading two posts recognizes the signature, and any
+detector finds it. So:
+1. **No fixed sentences, ever**, not even the disclaimer. The semantics are fixed (human
+   thought, AI assembly); the form is rewritten every time. `check_post.py` compares the
+   closer with those already used (`posts/.closers.log`, difflib similarity ≥ 0.7) and
+   blocks the repetition.
+2. **Irregularity**: vary paragraph length, don't close every section with a summary, leave
+   one detail too specific to be generic. Specificity cannot be faked: it is the residue a
+   generator does not produce.
+3. **Friction**: an opinion, an uncomfortable number, a name. Flat text is the signature.
 
-## Fonti
+## Sources
 
 - McGraw & Warren, *Benign Violation Theory* (HuRL, Univ. of Colorado)
 - *Incongruity-resolution*, ScIU, Indiana University, 2023
-- Partridge, *Usage and Abusage*, citato in ACM CSUR, *Survey on Automatic Generation of Figurative Language*
+- Partridge, *Usage and Abusage*, cited in ACM CSUR, *Survey on Automatic Generation of Figurative Language*
 - ACM CSUR, *Computational Humor Modeling: A Survey on the State of the Art*
-- Haeusler, *Llama LOL* (few-shot come leva principale per il tono comico)
-- Sayem, *Prompt Engineering and Stylistic Control in LLMs*, EJALS (tono esplicito vs implicito)
-- Ouellette, *All Write Now* #17 (voce stabile, tono plasmabile)
+- Haeusler, *Llama LOL* (few-shot as the main lever for comic tone)
+- Sayem, *Prompt Engineering and Stylistic Control in LLMs*, EJALS (explicit vs implicit tone)
+- Ouellette, *All Write Now* #17 (stable voice, malleable tone)
 - *Steering LLMs with Register Analysis for Arbitrary Style Transfer*, arXiv 2505.00679
-- Halliday, registro: campo / tenore / modo
+- Halliday, register: field / tenor / mode
 - *Nearest Neighbor LMs for Stylistic Controllable Generation*, arXiv 2210.15762
-- Wikipedia, *AI slop* (Willison, deepfates; Merriam-Webster e ADS Word of the Year 2025)
+- Wikipedia, *AI slop* (Willison, deepfates; Merriam-Webster and ADS Word of the Year 2025)
 - Wikipedia, *Signs of AI writing* (AISIGNS)
-- *StyloAI*, arXiv 2405.10129 (31 feature stilometriche)
+- *StyloAI*, arXiv 2405.10129 (31 stylometric features)

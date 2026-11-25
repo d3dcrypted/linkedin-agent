@@ -12,6 +12,7 @@ import difflib, os, re, sys
 ROOT = os.path.dirname(os.path.abspath(__file__))
 LOG = os.path.join(ROOT, "posts", ".closers.log")
 
+# The banned patterns below are Italian on purpose: the drafts they police are Italian.
 DISCLAIMER = re.compile(r"(umano|uman[ao]).{0,80}(AI|intelligenza artificiale)", re.I | re.S)
 BANNED = {
     "em dash": r"—",

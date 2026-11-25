@@ -229,6 +229,13 @@ author's own request, because the wording is more precise than a paraphrase.
   and the skills. The parts left in Italian are data, not prose: the drafted text,
   the closing lines already published, and the patterns that must match Italian
   sentences to be useful at all.
+- **Why the Italian survives at all:** it is not a leftover waiting to be
+  translated, it is the chosen working language of the output. The author's
+  reason, verbatim: *"l'italiano è stato scelto perché rende di più i concetti e
+  per mia necessità mi da uno spunto in più di espressione"*. It carries the
+  concepts better, and it hands him one more cue to express himself. Translating
+  the drafts into English to look tidy would cost exactly the thing the project
+  exists for.
 - **Kept as quotes:** the verbatim author quotes in this file stay in Italian,
   marked as quotes. They are the record of what was asked; translating them would
   forge it.

@@ -30,8 +30,9 @@ manual, the author copies and pastes.
 ## Prerequisites
 
 - `web_search` and `web_extract` (native). No key, no package.
-- The author writes in Italian: the post is in Italian, the research in English
-  (broader coverage).
+- The author writes in Italian **by choice, not by habit**: it carries the
+  concepts better and gives him one more cue to express himself. So the post is
+  in Italian, the research in English (broader coverage).
 
 ## Procedure
 

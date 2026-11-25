@@ -37,7 +37,9 @@ hallucinated identifiers. To unblock it the repo needs a search key: set
 2. **Research.** Real web search for figures that support, quantify or contradict
    the thought. Nothing is cited from memory.
 3. **Draft.** Written in Italian with the `comedic-voice` skill active (humor
-   theory, stand-up structure, tone by register).
+   theory, stand-up structure, tone by register). Italian is a choice, not a
+   leftover: it carries the concepts better and gives the author one more cue to
+   express himself.
 4. **Humanize.** Mandatory pass through the `humanizer` skill. Not optional.
 5. **Gate.** `check_post.py` verifies the draft mechanically. It must exit 0.
 6. **Publish.** The author copies the draft into LinkedIn. On publication the

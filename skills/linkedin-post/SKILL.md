@@ -57,13 +57,21 @@ manual, the author copies and pastes.
    Criterion: meaning intact and all inline micro-sources still there.
 5. **Save.** `write_file` to `~/projects/linkedin-agent/posts/<YYYY-MM-DD>-<slug>.md`
    with frontmatter: `date`, `status: draft`, `seed`, `sources` (list of URLs).
-   Then run `python3 ~/projects/linkedin-agent/check_post.py <file>`: it must
-   exit 0. Criterion: the file exists, the check passes.
-6. **Deliver.** Print the post and the path. The author publishes by hand.
+   Criterion: the file exists.
+6. **Image prompt.** Every draft carries one, in the same file. Turn the post's
+   idea into one or two objects on the house-style desk described in
+   `IMAGE-PROMPTS.md`, then append the block exactly as `AGENTS.md` formats it:
+   the prompt in English on one indented line, the alt text in Italian at most
+   120 characters, the aspect. Criterion: the block is in the file and
+   `check_post.py` accepts it — it refuses a draft without one.
+7. **Deliver and gate.** Run `python3 ~/projects/linkedin-agent/check_post.py <file>`:
+   it must exit 0. It checks the image prompt block too, so a draft that skipped
+   step 6 fails here. Print the post, the image prompt and the path. The author
+   publishes by hand.
    **Once published**, log the closer used:
    `python3 ~/projects/linkedin-agent/check_post.py <file> --log`. That's what makes
    it impossible to repeat the same shape in the next post.
-   Criterion: the line exists in `posts/.closers.log`.
+   Criterion: the check passes and the line exists in `posts/.closers.log`.
 
 ### Voice Rules (ghostwriter)
 
@@ -97,6 +105,7 @@ manual, the author copies and pastes.
     web_search(query="...", limit=3)      # search, in English
     web_extract(urls=[...])                # clean text from the sources
     write_file(path="~/projects/linkedin-agent/posts/...", content="...")
+    # image prompt: block format in AGENTS.md, house style in IMAGE-PROMPTS.md
 
 ## Pitfalls
 
@@ -105,7 +114,11 @@ manual, the author copies and pastes.
 - The search backend sometimes fails a single call: retry once with a reworded
   query before declaring the failure.
 - PDFs and pages behind a login can extract badly: prefer HTML articles/reports.
-- Don't generate images by default: it's the lowest priority, do it only if asked.
+- **The image prompt is not optional, the image is.** No image backend is
+  configured here, and generating is the author's call in whatever tool he picks:
+  never generate the picture unasked. The prompt, though, ships with every draft.
+  It costs nothing and it is the only part of the image stage that can be checked
+  mechanically.
 
 ## Verification
 
@@ -122,3 +135,8 @@ manual, the author copies and pastes.
 - The post contains the self-deprecating "human thought / AI assembly" disclaimer.
 - The draft file exists at the expected path with `status: draft`.
 - The output is in Italian, first person, with no hashtag cluster.
+- The draft ends with the `## Image prompt` block: one indented English line of at
+  least 25 words, Italian alt text within 120 characters, an accepted aspect (4:5,
+  1:1, 3:1, 1.91:1). `check_post.py` fails the draft if any of it is missing.
+- The prompt follows the house style in `IMAGE-PROMPTS.md`, and it asks for no
+  lettering, no logo and no recognizable person.

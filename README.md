@@ -14,7 +14,7 @@ Two parts, one of which works today.
 skill, which lives in this repo at `skills/linkedin-post/`. It uses the agent's
 native web search tool, drafts with the `comedic-voice` skill
 (`skills/comedic-voice/`), always passes the text through `humanizer`, and saves
-the draft under `posts/`. Zero dependencies, zero keys.
+the draft under `posts/`, image prompt included. Zero dependencies, zero keys.
 
 This repo is the single source of truth for those two skills: they are not copied
 into the agent profile, the profile points here with symlinks (see Installation).
@@ -30,7 +30,7 @@ hallucinated identifiers. To unblock it the repo needs a search key: set
 
 ## How a post is built
 
-    seed  ->  research  ->  draft  ->  humanize  ->  gate  ->  posts/*.md  ->  manual publish
+    seed  ->  research  ->  draft  ->  humanize  ->  image prompt  ->  gate  ->  posts/*.md  ->  manual publish
 
 1. **Seed.** The author's thought, captured verbatim. If it is missing, the tool
    asks for it instead of inventing a topic.
@@ -41,9 +41,40 @@ hallucinated identifiers. To unblock it the repo needs a search key: set
    leftover: it carries the concepts better and gives the author one more cue to
    express himself.
 4. **Humanize.** Mandatory pass through the `humanizer` skill. Not optional.
-5. **Gate.** `check_post.py` verifies the draft mechanically. It must exit 0.
-6. **Publish.** The author copies the draft into LinkedIn. On publication the
+5. **Image prompt.** The draft ends with the prompt to use for the post's image,
+   with its alt text and its aspect. Written, not generated: the author pastes it
+   into whatever image model he uses. The guide is
+   [IMAGE-PROMPTS.md](IMAGE-PROMPTS.md).
+6. **Gate.** `check_post.py` verifies the draft mechanically, image prompt
+   included. It must exit 0.
+7. **Publish.** The author copies the draft into LinkedIn. On publication the
    closing line is registered in `posts/.closers.log` so it can never be reused.
+
+## The image prompt
+
+Every draft ends with a block like this, and the gate refuses a draft without it:
+
+    ## Image prompt
+
+        A photo of an editorial still life on a matte grey desk, 4:5: a short mechanical conveyor carrying three plain cardboard boxes, a small brass gate at the end of the belt holding back the last one. Off-white wall behind, soft diffused light from the left, 50mm lens, shallow depth of field, subject off-centre with empty space on the right. Slate grey and off-white palette with one amber accent, calm and slightly dry. No text, no logos, no people.
+
+    **Alt text** (Italian, max 120 characters): Un nastro trasportatore su una scrivania con tre scatole di cartone: un cancelletto di ottone ferma l'ultima.
+
+    **Aspect** 4:5 (1080x1350) · **Negative** (only where the model has the field): blurry, low quality, jpeg artifacts, watermark, signature
+
+Copy the indented line into any image model — a chat model, Midjourney, FLUX,
+Stable Diffusion — and you get a picture that belongs to the post. It is written
+in English because that is what image models are trained on. The alt text is
+Italian because the post is Italian and a screen reader will read it in Italian.
+
+The images stay coherent across posts because the prompt is not invented from
+scratch each time: a fixed house style (medium, palette, light, framing, what is
+absent, mood) never changes, and only the subject follows the post.
+
+[IMAGE-PROMPTS.md](IMAGE-PROMPTS.md) holds the house style, the prompt order, the
+LinkedIn sizes, the negative-prompt rules model by model, and how to use the block
+outside Hermes. [AGENTS.md](AGENTS.md) is the same contract written for an agent:
+when to produce the block, and in what shape.
 
 ## Installation
 
@@ -67,6 +98,8 @@ so it runs on the system Python with no virtualenv.
 ## Layout
 
     check_post.py        executable style gate (stdlib only)
+    AGENTS.md            instructions for any agent working in this repo
+    IMAGE-PROMPTS.md     how the image prompt is written, and how to use it anywhere
     skills/              the two skills this repo owns (linkedin-post, comedic-voice)
     lnkd.py              standalone pipeline, search stage blocked (see Status)
     posts/               generated drafts, markdown with frontmatter

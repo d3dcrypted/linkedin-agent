@@ -28,3 +28,11 @@ La domanda non è quanto tempo risparmio automatizzando. È dove metto il punto 
 Ho pagato per scoprirlo. Tu puoi scoprirlo prima.
 
 Pensato da un umano, montato da una AI. Il pensiero è mio, le virgole sono negoziabili.
+
+## Image prompt
+
+    A photo of an editorial still life on a matte grey desk, 4:5: a short mechanical conveyor carrying three plain cardboard boxes, a small brass gate at the end of the belt holding back the last one. Off-white wall behind, soft diffused light from the left, 50mm lens, shallow depth of field, subject off-centre with empty space on the right. Slate grey and off-white palette with one amber accent, calm and slightly dry. No text, no logos, no people.
+
+**Alt text** (Italian, max 120 characters): Un nastro trasportatore su una scrivania con tre scatole di cartone: un cancelletto di ottone ferma l'ultima.
+
+**Aspect** 4:5 (1080x1350) · **Negative** (only where the model has the field): blurry, low quality, jpeg artifacts, watermark, signature

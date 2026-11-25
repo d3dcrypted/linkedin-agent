@@ -243,3 +243,40 @@ author's own request, because the wording is more precise than a paraphrase.
   draft written for an Italian audience. Its value as an example is that it is
   genuine, and a translated fake would be worth less.
 
+## 17. The draft ships an image prompt, not an image
+
+- **Decided by:** Human, verbatim: *"l'agente quando mi risponde al comando con cui
+  lo invoco mi deve andare dare un prompt da usare per generare immagini inerenti
+  al post"*, plus *"lascia anche un .md per gli agenti in cui gli spieghi come
+  usarlo e spiegalo anche nella facciata della repo"*.
+- **Choice:** every draft ends with an `## Image prompt` block — the prompt (one
+  indented line, English), the alt text (Italian, max 120 characters) and the
+  aspect. `check_post.py` refuses a draft without it. The prompt is written, the
+  image is not generated.
+- **Reconciliation with §10:** §10 said images are the last priority and no image
+  backend is configured here. Both still hold. What changed is that the cheap half
+  of the image stage is now mechanical: the prompt travels into whatever tool the
+  author picks, so the choice of model, licence and look stays his.
+- **Why English for the prompt, Italian for the alt text:** image models are
+  trained on English captions. The alt text is read aloud to an Italian audience,
+  on an Italian post, so it is Italian.
+- **Why a fixed house style:** coherence across posts comes from the constant part
+  (medium, palette, light, framing, what is absent, mood), not from a long prompt.
+  Only the subject changes per post. The table lives in `IMAGE-PROMPTS.md`; change
+  it there to re-brand the whole set.
+- **Why 4:5:** it is the tallest ratio LinkedIn accepts (3:1 to 4:5, 1080 px
+  recommended width, 5 MB per photo), so it fills the most of the mobile feed, and
+  a wider image is centred and cropped by LinkedIn anyway.
+- **Rejected: a separate skill for the image prompt.** A second procedure to keep
+  in sync with the voice rules, for one extra step in the same pipeline.
+- **Rejected: `image_prompt:` in the frontmatter.** Frontmatter is machine data and
+  this block is meant to be read and copied by hand. Keeping it out of the post
+  text also means it cannot be pasted into LinkedIn by accident.
+- **Gate details:** heading, at least 25 words in the indented line, alt text
+  within 120 characters, accepted aspect. `closer_of()` cuts the body at that
+  heading, so the image prompt can never be read as the closing line.
+- **Not verified:** no image was generated from these prompts on this machine —
+  there is no backend. The prompt structure is sourced in `IMAGE-PROMPTS.md`, and
+  the LinkedIn limits come from LinkedIn's help pages read through third-party
+  guides, because `web_extract` is down (§12).
+

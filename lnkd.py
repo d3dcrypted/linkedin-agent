@@ -35,6 +35,21 @@ HARD RULES:
 - Do NOT invent numbers, dates, names or statistics that are not in the sources.
 - If the sources are not enough to support a claim, drop the claim."""
 
+P_IMAGE = """You write the image prompt for the LinkedIn post below. Full guide: IMAGE-PROMPTS.md.
+
+HOUSE STYLE, keep it as it is: editorial still-life photograph on a desk; palette slate
+grey, off-white and one amber accent; soft diffused light from the left, no hard shadows;
+50mm lens, shallow depth of field, subject off-centre with generous empty space; no people,
+no faces, no hands, no logos, no brand marks, no lettering; mood calm and slightly dry.
+
+Turn the post's idea into ONE or TWO physical objects on that desk. Not a metaphor, not a
+diagram, not a person.
+
+Reply with exactly three lines, nothing else, no labels:
+1. the prompt: ONE line, 30-80 words, English, starting with "A photo of", naming the 4:5 ratio
+2. the alt text: Italian, at most 120 characters, describing only what is visible
+3. the negative prompt: five to eight short English terms"""
+
 
 def load_env():
     for p in (os.path.join(ROOT, ".env"), os.path.expanduser("~/.hermes/.env")):
@@ -118,13 +133,13 @@ def main():
     a = ap.parse_args()
     load_env()
 
-    print("1/3 generating the queries...", file=sys.stderr)
+    print("1/4 generating the queries...", file=sys.stderr)
     qs = [l.strip(" -•\t") for l in llm([{"role": "user", "content": P_QUERIES.format(seed=a.seed, n=a.n)}],
                                         a.model, 0.3, 300).splitlines() if l.strip()][:a.n]
     if not qs:
         sys.exit("no query generated")
 
-    print("2/3 collecting the sources...", file=sys.stderr)
+    print("2/4 collecting the sources...", file=sys.stderr)
     srcs, seen = [], set()
     for q in qs:
         for r in ddg(q, 3):
@@ -142,18 +157,27 @@ def main():
         sys.exit("no source collected — network or search down")
 
     blocks = "\n\n".join(f"### SOURCE {i+1}: {s['url']}\n{s['text']}" for i, s in enumerate(srcs))
-    print(f"3/3 writing the post ({len(srcs)} sources)...", file=sys.stderr)
+    print(f"3/4 writing the post ({len(srcs)} sources)...", file=sys.stderr)
     post = llm([{"role": "system", "content": P_WRITER},
                 {"role": "user", "content": f"AUTHOR'S THOUGHT:\n{a.seed}\n\nSOURCES:\n{blocks}"}],
                 a.model, 0.7, 1600)
+
+    print("4/4 writing the image prompt...", file=sys.stderr)
+    # ponytail: no validation here, check_post.py is the gate.
+    lines = [l.strip() for l in llm([{"role": "user", "content": P_IMAGE + "\n\nPOST:\n" + post}],
+                                    a.model, 0.4, 400).splitlines() if l.strip()] + ["", "", ""]
+    prompt, alt, neg = (re.sub(r"^\d[.)]\s*", "", l) for l in lines[:3])
+    block = (f"\n## Image prompt\n\n    {prompt}\n\n"
+             f"**Alt text** (Italian, max 120 characters): {alt}\n\n"
+             f"**Aspect** 4:5 (1080x1350) · **Negative** (only where the model has the field): {neg}\n")
 
     os.makedirs(a.out, exist_ok=True)
     slug = re.sub(r"[^a-z0-9]+", "-", a.seed.lower())[:40].strip("-")
     path = os.path.join(a.out, f"{datetime.date.today()}-{slug}.md")
     open(path, "w", encoding="utf-8").write(
         f"---\ndate: {datetime.date.today()}\nstatus: draft\n"
-        f"model: {a.model}\nsources: {len(srcs)}\n---\n\n{post}\n")
-    print("\n" + "═" * 60 + f"\n{post}\n" + "═" * 60)
+        f"model: {a.model}\nsources: {len(srcs)}\n---\n\n{post}\n{block}")
+    print("\n" + "═" * 60 + f"\n{post}\n{block}" + "═" * 60)
     print(f"\ndraft saved: {path}", file=sys.stderr)
 
 

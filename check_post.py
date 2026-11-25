@@ -33,8 +33,36 @@ BANNED = {
 }
 
 
+# A draft ships with an image prompt. See IMAGE-PROMPTS.md.
+IMAGE_SECTION = re.compile(r"(?m)^##\s+Image prompt\s*$")
+IMAGE_PROMPT = re.compile(r"(?m)^ {4}(\S.*)$")
+ALT_TEXT = re.compile(r"(?m)^\*\*Alt text\*\*[^:]*:\s*(.+?)\s*$")
+ASPECT = re.compile(r"Aspect\D{0,3}(4:5|1:1|3:1|1\.91:1)")
+MIN_PROMPT_WORDS = 25
+ALT_TEXT_MAX = 120  # LinkedIn's own limit: it cannot be edited after posting.
+
+
+def image_prompt_errors(body):
+    head = IMAGE_SECTION.search(body)
+    if not head:
+        return ["missing '## Image prompt' section"]
+    seg, errs = body[head.end():], []
+    prompt = IMAGE_PROMPT.search(seg)
+    if not prompt or len(prompt.group(1).split()) < MIN_PROMPT_WORDS:
+        errs.append(f"image prompt missing or under {MIN_PROMPT_WORDS} words (one line, indented 4 spaces)")
+    alt = ALT_TEXT.search(seg)
+    if not alt:
+        errs.append("image prompt without alt text")
+    elif len(alt.group(1)) > ALT_TEXT_MAX:
+        errs.append(f"alt text over {ALT_TEXT_MAX} characters ({len(alt.group(1))})")
+    if not ASPECT.search(seg):
+        errs.append("image prompt without an accepted aspect (4:5, 1:1, 3:1, 1.91:1)")
+    return errs
+
+
 def closer_of(path):
     body = open(path, encoding="utf-8").read().split("---", 2)[-1]
+    body = IMAGE_SECTION.split(body)[0]  # the image prompt is not part of the post
     return body.strip().split("\n\n")[-1].strip()
 
 
@@ -66,6 +94,7 @@ def check(path):
         errs.append("no inline micro-source (Body, year)")
     if conflict := closer_conflict(path):
         errs.append(conflict)
+    errs += image_prompt_errors(body)
     return errs, cites
 
 

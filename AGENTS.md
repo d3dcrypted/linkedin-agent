@@ -12,7 +12,7 @@ sources, and an image prompt for the post.
     check_post.py            the style gate; exits non-zero if a draft breaks the rules
     skills/linkedin-post/    the skill: the procedure, the voice rules, the template
     skills/comedic-voice/    humor theory used while drafting
-    posts/                   the drafts (English) and posts/.closers.log
+    posts/                   the drafts (English) and posts/.closers.log; git-ignored, never committed
     IMAGE-PROMPTS.md         how to write and use the image prompt
     DECISIONS.md             why the repo is the way it is; read before changing a rule
 

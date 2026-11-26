@@ -19,9 +19,3 @@ jobs:
         run: python3 scripts/validate-publication.py
       - name: Gate self-check
         run: python3 -m unittest discover -s tests -v
-      - name: Gate every committed draft
-        run: |
-          for draft in posts/*.md; do
-            echo "== $draft"
-            python3 check_post.py "$draft"
-          done

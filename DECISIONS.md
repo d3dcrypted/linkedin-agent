@@ -419,3 +419,15 @@ author's own request, because the wording is more precise than a paraphrase.
   characters), it has a test, and the reviewer's point was that it is *inconsistent* to
   keep it, not that it is optional.
 
+
+## 24. Drafts are output, and output is not published here
+
+- **Decided by:** Human: the drafts in `posts/` are results of running the pipeline, not
+  part of it, and the ones committed so far were tests.
+- **Choice:** `posts/` is git-ignored, the committed drafts and `posts/.closers.log` are
+  removed from the tree, and the CI step that gated every committed draft is gone with
+  them. The gate still runs locally on each draft, and the unit tests still check the gate
+  itself in CI.
+- **What it costs:** CI no longer proves that any real draft passes, and the closer log no
+  longer travels with the repo: a second clone starts with an empty one.
+- **Limit:** the removed drafts remain in the git history of this repository.

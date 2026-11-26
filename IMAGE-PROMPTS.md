@@ -197,7 +197,7 @@ subject are all reasons to regenerate, not to publish.
 
 ## Worked example
 
-Prompt for `posts/2026-11-25-automatizzare-i-processi-it-con-gli-llm.md`:
+Prompt for a draft about automating IT processes with LLMs:
 
     A photo of an editorial still life on a desk: a short mechanical conveyor
     carrying three plain cardboard boxes, the last one tilted off the belt onto

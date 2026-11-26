@@ -6,7 +6,7 @@ Two boundaries decide whether the pipeline is honest about its sources. The firs
 untrusted text: a fetched page is data, and nothing in the search path guarantees it was
 not written to hijack the model that reads it, so the injection lines have to be gone
 before the prompt is built. The second is the draft itself: what comes out of the stubs
-below has to satisfy the same gate CI runs on the drafts in posts/, otherwise the tool and
+below has to satisfy the same gate the author runs on the drafts in posts/, otherwise the tool and
 the gate it is checked by can drift apart without anyone noticing.
 """
 import importlib.util

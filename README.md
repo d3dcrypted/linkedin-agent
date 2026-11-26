@@ -159,8 +159,7 @@ so it runs on the system Python with no virtualenv.
     IMAGE-PROMPTS.md     how the image prompt is written, and how to use it anywhere
     skills/              the two skills this repo owns (linkedin-post, comedic-voice)
     lnkd.py              standalone pipeline (stdlib only); needs TAVILY_API_KEY to be reliable
-    posts/               generated drafts, markdown with frontmatter
-    posts/.closers.log   closing lines already published, one per post. Commit it.
+    posts/               generated drafts and posts/.closers.log; local only, git-ignored
     .env.example         the environment variables above, names only
 
 ## Why it is built this way

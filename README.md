@@ -3,17 +3,17 @@
 Turns one raw thought into a cited LinkedIn post draft. It does not publish:
 the author approves the draft and posts it by hand.
 
-The tool is deliberately small. One thought in, one markdown file out — the post,
-the first comment with the sources, and an image prompt — with every figure in the
-post traceable to a source listed in the first comment.
+The tool is deliberately small. One thought in, one markdown file out: the post,
+the first comment with the sources, and an image prompt. Every figure in the post
+traces to a source listed in the first comment.
 
 ## Status
 
 Two parts, either of which works on its own.
 
-**Working today with zero keys: a Hermes skill.** The pipeline used in practice is
-the `linkedin-post` skill, which lives in this repo at `skills/linkedin-post/`. It
-uses the agent's native web search tool, drafts with the `comedic-voice` skill
+The pipeline used in practice is the `linkedin-post` skill, which lives in this
+repo at `skills/linkedin-post/` and works today with no keys at all. It uses the
+agent's native web search tool, drafts with the `comedic-voice` skill
 (`skills/comedic-voice/`), always passes the text through `humanizer`, and saves
 the draft under `posts/`, sources comment and image prompt included. Zero
 dependencies, zero keys.
@@ -21,15 +21,16 @@ dependencies, zero keys.
 This repo is the single source of truth for those two skills: they are not copied
 into the agent profile, the profile points here with symlinks (see Installation).
 
-**Working with or without a search key: `lnkd.py`, the standalone pipeline.** The
-full seed → search → draft → image prompt flow runs on the standard library alone.
-Its research stage works keyless out of the box: with no key it searches with
-DuckDuckGo and fetches each page over plain HTTP. That is a complete, valid path —
-a reader who sets nothing still gets a working `lnkd.py`.
+The second part is `lnkd.py`, the standalone pipeline, which runs with or without
+a search key. The full seed → search → draft → image prompt flow runs on the
+standard library alone. Its research stage works keyless out of the box: with no
+key it searches with DuckDuckGo and fetches each page over plain HTTP. That is a
+complete, valid path, and a reader who sets nothing still gets a working
+`lnkd.py`.
 
 A key is optional, and buys resilience only. Set `TAVILY_API_KEY` and the same
 `search()` uses the keyed provider instead: it does not get rate-limited or
-challenged the way the keyless endpoint can, and — unlike DuckDuckGo — it also
+challenged the way the keyless endpoint can, and unlike DuckDuckGo it also
 returns full page text, so one key covers both the search and the extract step.
 The key exists here for one concrete reason: from the author's own VM the keyless
 endpoint answers 429/challenge, so the keyless path is fine in general and was
@@ -40,13 +41,13 @@ blocked only from that IP. Both paths live in `search()`; neither is a stub.
 ## What you need to run it
 
 Nothing is mandatory. The skill path needs no key, and `lnkd.py` is complete
-without one — the key below is a resilience upgrade, not a prerequisite. The env
-file is `~/.hermes/.env` (or a local `./.env`), one `KEY=value` per line —
+without one. The key below is a resilience upgrade, not a prerequisite. The env
+file is `~/.hermes/.env` (or a local `./.env`), one `KEY=value` per line;
 `lnkd.py` reads both, `load_env()` at the top.
 
 | Variable | Needed for | Without it |
 |---|---|---|
-| `TAVILY_API_KEY` | `lnkd.py` resilience: keyed search + full-text extract, one key for both. Free tier: 1000 calls/month, key at https://tavily.com | keyless DuckDuckGo + plain fetch — valid unless your IP is rate-limited |
+| `TAVILY_API_KEY` | `lnkd.py` resilience: keyed search + full-text extract, one key for both. Free tier: 1000 calls/month, key at https://tavily.com | keyless DuckDuckGo + plain fetch, valid unless your IP is rate-limited |
 | `OPENROUTER_API_KEY` | the drafting LLM in `lnkd.py` | `lnkd.py` exits with a clear message |
 | `OPENROUTER_MODEL` | optional, overrides the default model | `openai/gpt-oss-120b` |
 
@@ -54,7 +55,7 @@ file is `~/.hermes/.env` (or a local `./.env`), one `KEY=value` per line —
 needs none of them: it runs on the agent's native tools.
 
 If you drive the skill through the Hermes agent, point its web-extract backend at
-a provider that can actually extract — in `~/.hermes/config.yaml`:
+a provider that can actually extract, in `~/.hermes/config.yaml`:
 
     web:
       extract_backend: tavily
@@ -79,12 +80,12 @@ never published and is not counted at all.
    theory, stand-up structure, tone by register). The body carries no URL and no
    source block: the sources go to the first comment, and the post ends by saying
    so.
-4. **Humanize.** Mandatory pass through the `humanizer` skill. Not optional.
-5. **First comment.** The sources — name, date, URL and the claim each backs —
+4. **Humanize.** Mandatory pass through the `humanizer` skill.
+5. **First comment.** The sources (name, date, URL and the claim each backs)
    gathered under a `## First comment` heading, ready to paste under the post.
 6. **Image prompt.** The draft ends with the prompt to use for the post's image,
    with its alt text and its aspect. Written, not generated: the author pastes it
-   into whatever image model he uses. It is outside the post and its character
+   into whatever image model they use. It is outside the post and its character
    count. The guide is [IMAGE-PROMPTS.md](IMAGE-PROMPTS.md).
 7. **Gate.** `check_post.py` verifies the draft mechanically, image prompt and
    first comment included. It must exit 0.
@@ -104,14 +105,18 @@ Every draft ends with a block like this, and the gate refuses a draft without it
 
     **Aspect** 4:5 (1080x1350) · **Negative** (only where the model has the field): blurry, low quality, jpeg artifacts, watermark, signature
 
-Copy the indented line into any image model — a chat model, Midjourney, FLUX,
-Stable Diffusion — and you get a picture that belongs to the post. It is written
+Copy the indented line into any image model (a chat model, Midjourney, FLUX,
+Stable Diffusion) and you get a picture that belongs to the post. It is written
 in English because that is what image models are trained on, and so is the alt
 text, which a screen reader reads on the same English post.
 
 The images stay coherent across posts because the prompt is not invented from
 scratch each time: a fixed house style (medium, palette, light, framing, what is
-absent, mood) never changes, and only the subject follows the post.
+absent, mood) never changes, and only the subject follows the post. The subject
+comes out of the post, in the post's own words, and never repeats an object an
+earlier draft already used: a tray of index cards fits every post, which is why it
+is the wrong object for all of them. The gate fails a prompt that shares no word
+with its post, and one whose object another draft already uses.
 
 [IMAGE-PROMPTS.md](IMAGE-PROMPTS.md) holds the house style, the prompt order, the
 LinkedIn sizes, the negative-prompt rules model by model, and how to use the block
@@ -153,6 +158,12 @@ so it runs on the system Python with no virtualenv.
 Every non-obvious choice, with the reason behind it and who made the call, is
 recorded in [DECISIONS.md](DECISIONS.md). Read that before changing the gate,
 the voice rules or the publishing path.
+
+## Authorship
+
+Human thought, machine hand. The author set the direction, took the decisions and
+reviewed the result; an AI assistant produced the drafting, the code and the prose
+in this file. Mistakes are the author's.
 
 ## Attribution
 

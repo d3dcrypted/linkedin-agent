@@ -59,7 +59,9 @@ A draft is three separate outputs, each a clean block to copy on its own:
    Criterion: meaning intact.
 5. **Save.** `write_file` to `~/projects/linkedin-agent/posts/<YYYY-MM-DD>-<slug>.md`
    with frontmatter: `date`, `status: draft`, `seed` (verbatim), `sources` (list of
-   URLs). Criterion: the file exists.
+   URLs, the ones actually used). Criterion: the file exists and the gate passes —
+   `check_post.py` refuses a URL cited in the first comment that is not in this list,
+   and a source listed here and then not cited.
 6. **First comment.** The post body carries **no URLs and no source block**. Under a
    `## First comment` heading, list the sources — name, date, URL, and the claim
    each one backs — so the block can be pasted as the first comment. End the post

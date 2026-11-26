@@ -11,7 +11,14 @@ prompt is never published and is not counted.
 Attribution: the banned patterns re-implement, as regular expressions, the
 AI-writing tells catalogued in Wikipedia "Signs of AI writing", the same catalogue
 the humanizer skill (MIT, github.com/blader/humanizer) implements. No code was
-copied from it. See DECISIONS.md section 15. This file is MIT."""
+copied from it. See DECISIONS.md section 15. This file is MIT.
+
+The two rules about AI are not in tension, they are different in kind: the banned
+patterns remove the FORM that makes text read as generated, the disclosure states
+the FACT that a machine assembled it. A post can be free of every tell and still
+owe the reader the second sentence, and a post that declares the AI and keeps the
+tells is what the gate exists to stop. Removing the declaration to look less
+generated would be the one use of this file that is dishonest. See DECISIONS.md 23."""
 import difflib, glob, os, re, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -48,6 +55,7 @@ ASPECT = re.compile(r"Aspect\D{0,3}(4:5|1:1|3:1|1\.91:1)")
 MIN_PROMPT_WORDS = 25
 ALT_TEXT_MAX = 120  # LinkedIn's own limit: it cannot be edited after posting.
 URL = re.compile(r"https?://\S+")
+FRONTMATTER = re.compile(r"\A---\n(.*?)\n---\n", re.S)
 # The line pointing at the sources comment is boilerplate: it must not count as the closing line.
 POINTER = re.compile(r"(?i)sources?\b[^.\n]*first comment\.?")
 
@@ -158,6 +166,48 @@ def closer_conflict(path, ratio=0.7):
     return None
 
 
+def declared_sources(raw):
+    """The URLs the draft frontmatter says it was written from, in order."""
+    m = FRONTMATTER.match(raw.lstrip("\ufeff"))
+    if not m:
+        return []
+    parts = re.split(r"(?m)^sources:\s*$", m.group(1), maxsplit=1)
+    if len(parts) == 1:
+        return []
+    return [line.strip().lstrip("-").strip() for line in parts[1].splitlines()
+            if line.strip().startswith("-")]
+
+
+def _bare(url):
+    """Url minus the punctuation that belongs to the sentence, not to the address.
+
+    A closing bracket is stripped only when it is unbalanced: Wikipedia-style URLs
+    end in one, and stripping it would make the two lists disagree for good.
+    """
+    url = url.rstrip(".,;]")
+    return url[:-1] if url.endswith(")") and url.count("(") < url.count(")") else url
+
+
+def citation_errors(raw, comment):
+    """'Every fact has a source' as a boundary instead of a wish.
+
+    The gate cannot read a claim and decide whether a source supports it: that
+    judgement needs the source text and stays with the writer. What it can check is
+    that the citations and the frontmatter agree, so no URL can appear in the first
+    comment that no search returned, and no source can be recorded in the metadata
+    and then dropped from the comment that is supposed to carry it.
+    """
+    declared, cited = declared_sources(raw), [u for u in URL.findall(comment)]
+    if not declared:
+        return ["frontmatter without a 'sources' list: the draft does not record what it was "
+                "written from, so the citations cannot be checked against anything"]
+    errs = [f"cited source not declared in the frontmatter: {url}" for url in cited
+            if _bare(url) not in [_bare(d) for d in declared]]
+    errs += [f"declared source not cited in the first comment: {url}" for url in declared
+             if _bare(url) not in [_bare(c) for c in cited]]
+    return errs
+
+
 def check(path):
     raw = open(path, encoding="utf-8").read()
     body = raw.split("---", 2)[2] if raw.startswith("---") else raw
@@ -175,6 +225,7 @@ def check(path):
             errs.append(f"first comment over {COMMENT_MAX} characters ({len(comment)})")
         if not URL.search(comment):
             errs.append("first comment without a source URL")
+        errs += citation_errors(raw, comment)
     if not re.search(r"(?i)first comment", post):
         errs.append("post does not point to the sources in the first comment")
     if conflict := closer_conflict(path):

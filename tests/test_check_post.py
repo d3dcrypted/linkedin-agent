@@ -33,6 +33,8 @@ GAUGE = ("a brass dial gauge lying face up on a matte grey desk, its needle past
 TEMPLATE = """---
 date: 2026-01-01
 status: draft
+sources:
+  - https://example.com/a
 ---
 
 %s
@@ -58,6 +60,12 @@ Sources in the first comment.
 def draft(closing, prompt=PROMPT):
     with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False, encoding="utf-8") as f:
         f.write(TEMPLATE % (POST, closing, prompt))
+        return f.name
+
+
+def written(text):
+    with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False, encoding="utf-8") as f:
+        f.write(text)
         return f.name
 
 
@@ -112,6 +120,38 @@ class ImagePrompt(unittest.TestCase):
             with mock.patch.object(cp, "ROOT", tmp):
                 errs, *_ = cp.check(second)
         self.assertEqual(errs, [])
+
+
+class Citations(unittest.TestCase):
+    """The comment is checked against the frontmatter, not against good faith.
+
+    'Every fact has a source' cannot be verified by reading a sentence; what can be
+    verified is that the URLs in the comment are the URLs the draft was written from.
+    """
+
+    def test_url_not_declared_in_the_frontmatter_is_rejected(self):
+        raw = (TEMPLATE % (POST, CLOSER, PROMPT)).replace(
+            "- Source: https://example.com/a", "- Source: https://invented.example.org/x")
+        errs, *_ = cp.check(written(raw))
+        self.assertTrue(any("cited source not declared" in e for e in errs), errs)
+
+    def test_declared_source_missing_from_the_comment_is_rejected(self):
+        raw = (TEMPLATE % (POST, CLOSER, PROMPT)).replace(
+            "- Source: https://example.com/a", "- A report nobody can check")
+        errs, *_ = cp.check(written(raw))
+        self.assertTrue(any("declared source not cited" in e for e in errs), errs)
+
+    def test_draft_without_a_sources_list_is_rejected(self):
+        raw = (TEMPLATE % (POST, CLOSER, PROMPT)).replace(
+            "sources:\n  - https://example.com/a\n", "")
+        errs, *_ = cp.check(written(raw))
+        self.assertTrue(any("without a 'sources' list" in e for e in errs), errs)
+
+    def test_a_parenthesised_url_is_the_same_url(self):
+        """Wikipedia-style addresses end in a bracket; it belongs to the address."""
+        raw = (TEMPLATE % (POST, CLOSER, PROMPT)).replace(
+            "https://example.com/a", "https://en.wikipedia.org/wiki/Focal_point_(game_theory)")
+        self.assertEqual(cp.check(written(raw))[0], [])
 
 
 if __name__ == "__main__":

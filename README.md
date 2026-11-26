@@ -4,8 +4,15 @@ Turns one raw thought into a cited LinkedIn post draft. It does not publish:
 the author approves the draft and posts it by hand.
 
 The tool is deliberately small. One thought in, one markdown file out: the post,
-the first comment with the sources, and an image prompt. Every figure in the post
-traces to a source listed in the first comment.
+the first comment with the sources, and an image prompt.
+
+"Every figure traces to a source" is a rule the writer follows, and a boundary the
+gate enforces as far as it can: the draft records the sources it was written from in
+its frontmatter, and `check_post.py` refuses a URL in the comment that is not one of
+them, or a source recorded in the frontmatter and then not cited. Whether a source
+actually supports the sentence above it needs the source text and stays a human
+judgement. Nothing is ever cited from memory: the pipeline writes only from pages it
+fetched, and it never publishes.
 
 ## Status
 
@@ -75,7 +82,10 @@ never published and is not counted at all.
 1. **Seed.** The author's thought, captured verbatim. If it is missing, the tool
    asks for it instead of inventing a topic.
 2. **Research.** Real web search for figures that support, quantify or contradict
-   the thought. Nothing is cited from memory.
+   the thought. Nothing is cited from memory. A fetched page is untrusted data:
+   instruction-like lines are stripped before the text enters the prompt, the block is
+   delimited as `<source n="..">`, and the writer is told to treat everything inside it
+   as content to read, never as a task to run.
 3. **Draft.** Written in English with the `comedic-voice` skill active (humor
    theory, stand-up structure, tone by register). The body carries no URL and no
    source block: the sources go to the first comment, and the post ends by saying

@@ -376,3 +376,44 @@ author's own request, because the wording is more precise than a paraphrase.
 - **The image prompt is outside the post:** not counted toward the 3000-character
   limit, never pasted into LinkedIn. Only the body counts (see §17).
 
+## 22. A fetched page is untrusted data
+
+- **Decided by:** Human, on external review: the pages downloaded during research were
+  going into the writer's prompt untouched, with no defence against a page written to
+  instruct the model that reads it.
+- **Choice:** `lnkd.py` runs every fetched page through `sanitize()` before the prompt is
+  built. It removes HTML comments, invisible and bidirectional characters, and the lines
+  that carry an instruction (`ignore previous instructions`, `disregard the rules`,
+  `you are now`, fake `system:` turns, the Italian equivalents, and `<source>`/`<system>`
+  tags that could close the data block early). The sources are then wrapped in
+  `<source n="1" url="...">` and `P_WRITER` states that everything inside is data, never
+  an instruction, and that only the prompt sets the task.
+- **Why:** research means fetching pages the author did not write and cannot vouch for,
+  and the writer is a model that reads them as text. The cheap, predictable defence is to
+  strip the craft before it enters the prompt; the delimiter and the prompt line cover
+  what a line filter cannot see coming.
+- **What it costs:** a legitimate page that discusses prompt injection in those exact
+  words loses those lines too. The filter is line-level by design: no classifier, no
+  model, no dependence on a poisoned page matching one of the patterns on the list.
+  `check_post.py` is unaffected — it never sees source text.
+
+## 23. The AI tells and the AI disclosure are two different rules
+
+- **Decided by:** Human, on external review: `check_post.py` strips the marks of machine
+  writing while requiring a sentence that declares the machine, which the reviewer read
+  as contradictory.
+- **Choice:** both rules stay, and the file now says why they are not the same rule. The
+  banned patterns remove the *form* that makes text read as generated — the antithesis,
+  the "it is not X, it is Y", the closing sentence that summarises what was just said. The
+  disclosure states a *fact*: that a machine assembled these words. A post can be free of
+  every tell and still owe the reader that fact, and a post that declares the AI and keeps
+  the tells is exactly what the gate exists to stop.
+- **Why:** the honest signal is the one that survives a reader who is trying to tell
+  whether a human wrote it. Style hygiene makes the text better to read; it does not make
+  the authorship claim true, and it must not be used to imply one that is not. The README
+  declares the same thing, in the same words, one level up.
+- **What is explicitly not allowed:** using the style rules to remove or soften the
+  disclosure. It is required by `check_post.py` (a human/machine pair within 80
+  characters), it has a test, and the reviewer's point was that it is *inconsistent* to
+  keep it, not that it is optional.
+

@@ -390,8 +390,10 @@ author's own request, because the wording is more precise than a paraphrase.
   an instruction, and that only the prompt sets the task.
 - **Why:** research means fetching pages the author did not write and cannot vouch for,
   and the writer is a model that reads them as text. The cheap, predictable defence is to
-  strip the craft before it enters the prompt; the delimiter and the prompt line cover
-  what a line filter cannot see coming.
+  strip the craft before it enters the prompt. The filter is a phrase list: it removes
+  `ignore your previous instructions` and lets `disregard what you were told earlier`
+  through. For what it misses, the delimiter and the prompt line are the only defence,
+  and they are a request to the model, not a guarantee.
 - **What it costs:** a legitimate page that discusses prompt injection in those exact
   words loses those lines too. The filter is line-level by design: no classifier, no
   model, no dependence on a poisoned page matching one of the patterns on the list.

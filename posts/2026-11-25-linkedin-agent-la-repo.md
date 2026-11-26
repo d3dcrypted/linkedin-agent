@@ -27,8 +27,8 @@ Sources:
 
 ## Image prompt
 
-    A photo of an editorial still life on a matte grey desk: a shallow wooden tray holding a small stack of blank index cards, the top card pushed half out and held by a small brass clip, a second brass clip resting beside the tray. Off-white wall behind, soft diffused light from the left, 50mm lens, shallow depth of field, subject off-centre with empty space on the right. Slate grey and off-white palette with one amber accent, calm and slightly dry. No text, no logos, no people.
+    A photo of an editorial still life on a matte grey desk: a small hand-cranked machine feeding a single blank sheet between two brass rollers, a thin steel rule laid across the sheet as if measuring it. Off-white wall behind, soft diffused light from the left, 50mm lens, shallow depth of field, subject off-centre with empty space on the right. Slate grey and off-white palette with one amber accent, calm and slightly dry. No text, no logos, no people.
 
-**Alt text** (English, max 120 characters): A wooden tray of blank index cards on a grey desk, the top card clipped and pushed half out.
+**Alt text** (English, max 120 characters): A hand-cranked machine feeds one blank sheet between brass rollers, a steel rule laid across it.
 
 **Aspect** 4:5 (1080x1350) · **Negative** (only where the model has the field): blurry, low quality, jpeg artifacts, watermark, signature

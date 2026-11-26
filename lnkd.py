@@ -47,8 +47,11 @@ grey, off-white and one amber accent; soft diffused light from the left, no hard
 50mm lens, shallow depth of field, subject off-centre with generous empty space; no people,
 no faces, no hands, no logos, no brand marks, no lettering; mood calm and slightly dry.
 
-Turn the post's idea into ONE or TWO physical objects on that desk. Not a metaphor, not a
-diagram, not a person.
+Derive the object from the post, do not free-associate it. First name the post's subject in
+one sentence, in the post's own words. Then make that sentence visible as ONE or TWO physical
+objects on that desk. Not a metaphor, not a diagram, not a person, and never a generic desk
+prop (a tray of index cards, a stack of paper, a notebook, a pen, a cup): those fit every
+post, so they carry none. The prompt must reuse at least one concrete word from the post.
 
 Reply with exactly three lines, nothing else, no labels:
 1. the prompt: ONE line, 30-80 words, English, starting with "A photo of", naming the 4:5 ratio

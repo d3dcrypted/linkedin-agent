@@ -1,6 +1,6 @@
 ---
 name: comedic-voice
-description: Craft real irony, not cabaret. Stand-up structure for text.
+description: "Use when writing irony: stand-up structure for text."
 version: 0.1.0
 author: Hermes Agent
 license: MIT

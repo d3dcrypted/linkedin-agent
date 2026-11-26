@@ -266,8 +266,11 @@ author's own request, because the wording is more precise than a paraphrase.
   the same English post. (Was Italian until §21.)
 - **Why a fixed house style:** coherence across posts comes from the constant part
   (medium, palette, light, framing, what is absent, mood), not from a long prompt.
-  Only the subject changes per post. The table lives in `IMAGE-PROMPTS.md`; change
-  it there to re-brand the whole set.
+  Only the subject changes per post, and the subject is derived from the post instead
+  of free-associated: the fixed block is most of the prompt, so an object picked by
+  association (a tray of index cards) fits every post and belongs to none. The table
+  and the derivation live in `IMAGE-PROMPTS.md`; change the table to re-brand the
+  whole set.
 - **Why 4:5:** it is the tallest ratio LinkedIn accepts (3:1 to 4:5, 1080 px
   recommended width, 5 MB per photo), so it fills the most of the mobile feed, and
   a wider image is centred and cropped by LinkedIn anyway.
@@ -279,6 +282,15 @@ author's own request, because the wording is more precise than a paraphrase.
 - **Gate details:** heading, at least 25 words in the indented line, alt text
   within 120 characters, accepted aspect. `closer_of()` cuts the body at that
   heading, so the image prompt can never be read as the closing line.
+- **Why the gate also checks coherence (2026-11-26):** the author's read was that the
+  prompt was "sempre lo stesso", and it was: the object in one draft shared no word
+  with its own post. The gate now fails a prompt that is house style only (fewer than
+  four words of its own), one sharing no word with the post body, and one whose subject
+  words are more than 60% another draft's. Floors, not a judgement of the image:
+  `HOUSE_WORDS` in `check_post.py` copies the style vocabulary from the table in
+  `IMAGE-PROMPTS.md`, and it is the one deliberate copy in the repo — the gate cannot
+  tell style from subject without it. The derivation rule itself lives in
+  `IMAGE-PROMPTS.md`, "Deriving the object".
 - **Not verified:** no image was generated from these prompts on this machine —
   there is no backend. The prompt structure is sourced in `IMAGE-PROMPTS.md`, and
   the LinkedIn limits come from LinkedIn's help pages read through third-party

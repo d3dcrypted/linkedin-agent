@@ -42,7 +42,10 @@ The draft is not finished until the block is in the file, in this exact shape:
 The prompt is one single indented line so it is one copyable block. The gate
 checks the heading, that the line has at least 25 words, that the alt text is
 present and at most 120 characters, and that the aspect is one of the ratios
-LinkedIn accepts.
+LinkedIn accepts. It also checks that the prompt carries its own post: at least
+four words of its own beyond the house style, at least one word shared with the
+post body, and no more than 60% of its subject words in common with another draft
+in `posts/`.
 
 The post also ships a `## First comment` section: the sources (name, date, URL and
 the claim each backs), meant to be pasted as the first comment under the post. The
@@ -55,10 +58,15 @@ Read `IMAGE-PROMPTS.md` — it is the full guide, with the fixed house style tha
 keeps the images coherent across posts, the prompt order, the LinkedIn sizes, and
 the negative-prompt rules per model family. The short version:
 
-1. Take the post's idea and turn it into **one or two physical objects on a desk**.
-   Not a metaphor, not a diagram, not a person.
+1. Name the post's subject in one sentence, in the post's own words, then make **that
+   sentence visible** as one or two objects on a desk. Not a metaphor, not a diagram,
+   not a person, and not a generic desk prop: a tray of index cards fits every post,
+   which is why it is the wrong object for all of them.
 2. Keep the fixed block (medium, palette, light, framing, "absent" row, mood) as
-   it is in the guide. Only the subject changes from post to post.
+   it is in the guide. Only the subject changes from post to post, and it comes out of
+   the post: read the other drafts in `posts/` first and never reuse their object. The
+   derivation, with the counter-example, is in `IMAGE-PROMPTS.md`, "Deriving the
+   object".
 3. Write it in **English**: image models are trained on English captions. The alt
    text is in **English** too, so a screen reader reads the post and its image in
    the same language.

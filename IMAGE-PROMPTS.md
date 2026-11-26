@@ -24,10 +24,37 @@ Fixed, in every prompt:
 | Absent | people, faces, hands, logos, brand marks, any lettering | rights and artifacts: see "Rules" below |
 | Mood | calm and slightly dry | one word, at the end |
 
-Variable, per post: **one or two objects** that stand for the idea. That is the
-whole per-post part. A post about automation becomes a conveyor of labelled
-boxes; a post about monitoring becomes a desk clock and a fan; a post about
-backups becomes two identical hard drives, one in a drawer.
+Variable, per post: **one or two objects**, and they have to come out of the post.
+That is the whole per-post part.
+
+## Deriving the object
+
+The failure mode is a prompt that reads like every other prompt. The fixed block is
+most of the words, so when the subject is picked by free association the image ends up
+saying nothing about the post. A tray of index cards fits a post about automation, a
+post about a hallway standoff and a post about backups equally well, which is exactly
+why it is the wrong object. Derive it in three steps:
+
+1. **Name the post's subject in one sentence**, in the post's own words: "a machine
+   drafts the text and a script checks it", "a human gate sits in the workflow", "two
+   people both step to the right".
+2. **Make that sentence visible.** One or two objects, no metaphor, no diagram: a press
+   feeding a sheet with a steel rule laid across it; a conveyor with a brass gate
+   holding the last box; two identical blocks on a strip of tape, both nudged the same
+   way. The object should *be* the sentence, not a symbol for the topic.
+3. **Read the other drafts in `posts/` first**, and never reuse their object. The same
+   object in two posts is the visual version of the same closing line: the easiest
+   signature to correlate, and a follower of the profile sees it at once.
+
+The self-check before you commit the block: *could this object sit under any other post
+in this folder?* If yes it is the wrong object, go back to step 1.
+
+`check_post.py` enforces the mechanical half: the prompt must carry at least four words
+of its own beyond the house style, at least one word that also appears in the post, and
+no more than 60% of its subject words in common with another draft. That is a floor,
+not a proof. A prompt can pass it and still be a weak image, so the three steps above
+are the rule and the gate is the tripwire: the gate catches the dissociation and the
+repetition, the author catches the rest.
 
 To re-brand the set, change the table. Nothing else in this file depends on it.
 

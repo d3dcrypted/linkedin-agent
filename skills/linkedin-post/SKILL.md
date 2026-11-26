@@ -66,13 +66,19 @@ A draft is three separate outputs, each a clean block to copy on its own:
    body with one short line that says the sources are in the first comment
    ("Sources in the first comment."). Criterion: the section exists, holds at least
    one URL, and the post points to it.
-7. **Image prompt.** Every draft carries one, in the same file. Turn the post's idea
-   into one or two objects on the house-style desk described in `IMAGE-PROMPTS.md`,
-   then append the block exactly as `AGENTS.md` formats it: the prompt in English on
-   one indented line, the alt text in English at most 120 characters, the aspect.
+7. **Image prompt.** Every draft carries one, in the same file. Derive the object from
+   the post: name its subject in one sentence, in the post's own words, and make that
+   sentence visible as one or two objects on the house-style desk described in
+   `IMAGE-PROMPTS.md` ("Deriving the object"). Never reuse an object another draft in
+   `posts/` already uses: a generic writing prop (a tray of index cards, a notebook, a
+   cup) fits every post, so it belongs to none. Then append the block exactly as
+   `AGENTS.md` formats it: the prompt in English on one indented line, the alt text in
+   English at most 120 characters, the aspect.
    **The prompt is outside the post**: it is not counted toward the character limit
    and it is never pasted into the post. Criterion: the block is in the file and
-   `check_post.py` accepts it — it refuses a draft without one.
+   `check_post.py` accepts it: it refuses a draft without one, one that is house
+   style only, one whose prompt shares no word with the post, and one whose object
+   repeats an object already used in `posts/`.
 8. **Deliver and gate.** Run `python3 ~/projects/linkedin-agent/check_post.py <file>`:
    it must exit 0. Print the **three blocks separately**, each on its own so it can
    be copied in one go: the post text, the first comment with the sources, the image
@@ -152,5 +158,8 @@ A draft is three separate outputs, each a clean block to copy on its own:
 - The draft ends with the `## Image prompt` block: one indented English line of at
   least 25 words, English alt text within 120 characters, an accepted aspect (4:5,
   1:1, 3:1, 1.91:1). `check_post.py` fails the draft if any of it is missing.
-- The prompt follows the house style in `IMAGE-PROMPTS.md`, and it asks for no
-  lettering, no logo and no recognizable person.
+- The prompt follows the house style in `IMAGE-PROMPTS.md` and carries its own post: the
+  object is derived from the post's subject, not a generic desk prop, and no other draft
+  in `posts/` uses it. `check_post.py` fails a prompt with no word in common with the
+  post, one that is house style only, and one whose object repeats another draft's.
+- The prompt asks for no lettering, no logo and no recognizable person.

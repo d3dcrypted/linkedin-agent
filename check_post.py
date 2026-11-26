@@ -12,7 +12,7 @@ Attribution: the banned patterns re-implement, as regular expressions, the
 AI-writing tells catalogued in Wikipedia "Signs of AI writing", the same catalogue
 the humanizer skill (MIT, github.com/blader/humanizer) implements. No code was
 copied from it. See DECISIONS.md section 15. This file is MIT."""
-import difflib, os, re, sys
+import difflib, glob, os, re, sys
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 LOG = os.path.join(ROOT, "posts", ".closers.log")
@@ -51,6 +51,17 @@ URL = re.compile(r"https?://\S+")
 # The line pointing at the sources comment is boilerplate: it must not count as the closing line.
 POINTER = re.compile(r"(?i)sources?\b[^.\n]*first comment\.?")
 
+# The prompt's fixed block is the same in every draft, so a prompt carrying only that
+# block says nothing about its own post. Telling the style apart from the subject means
+# the gate has to know the style vocabulary: this is the one deliberate copy of the
+# table in IMAGE-PROMPTS.md, keep it aligned when the house style changes.
+HOUSE_WORDS = frozenset("""photo editorial still life desk matte grey white wall behind
+soft diffused light left lens shallow depth field subject centre empty space right slate
+palette amber accent calm slightly dry text logos people ratio""".split())
+MIN_SUBJECT_WORDS = 4  # the per-post part has to carry more than the style
+# ponytail: plain token overlap, no stemming. Raise it if a false positive shows up.
+SUBJECT_OVERLAP = 0.6
+
 
 def split_sections(body):
     """(post, comment, image), each stripped; a missing section yields ''."""
@@ -76,6 +87,47 @@ def image_prompt_errors(image):
         errs.append(f"alt text over {ALT_TEXT_MAX} characters ({len(alt.group(1))})")
     if not ASPECT.search(image):
         errs.append("image prompt without an accepted aspect (4:5, 1:1, 3:1, 1.91:1)")
+    return errs
+
+
+def content_words(text):
+    return {w for w in re.findall(r"[a-z]{4,}", text.lower())}
+
+
+def image_subject(image):
+    """The words of a prompt that carry its post, rather than the house style."""
+    m = IMAGE_PROMPT.search(image)
+    return content_words(m.group(1)) - HOUSE_WORDS if m else set()
+
+
+def image_coherence_errors(image, post, path):
+    """The prompt has to come out of the post, not out of the house style alone.
+
+    Three mechanical failures: a prompt that is the fixed block and nothing else, one
+    whose object has nothing to do with the text, and one that reuses the object of an
+    earlier draft in posts/ (the same picture in two posts is the signature the reused
+    closing line is). See IMAGE-PROMPTS.md, "Deriving the object".
+    """
+    m = IMAGE_PROMPT.search(image)
+    if not m:
+        return []  # missing or unparsable block: image_prompt_errors reports that
+    subject = content_words(m.group(1)) - HOUSE_WORDS
+    if len(subject) < MIN_SUBJECT_WORDS:
+        return [f"image prompt is house style only ({len(subject)} words carry the post, "
+                f"need {MIN_SUBJECT_WORDS})"]
+    if not subject & content_words(post):
+        return ["image prompt shares no word with the post: make the post's own subject "
+                "visible, not a generic desk object"]
+    errs = []
+    for other in sorted(glob.glob(os.path.join(ROOT, "posts", "*.md"))):
+        if os.path.abspath(other) == os.path.abspath(path):
+            continue
+        theirs = image_subject(open(other, encoding="utf-8").read().split("---", 2)[-1])
+        shared = subject & theirs
+        if theirs and len(shared) / len(subject) > SUBJECT_OVERLAP:
+            errs.append(f"image object reused ({len(shared)}/{len(subject)} words also in "
+                        f"{os.path.basename(other)}): give this post its own object")
+            break
     return errs
 
 
@@ -127,7 +179,7 @@ def check(path):
         errs.append("post does not point to the sources in the first comment")
     if conflict := closer_conflict(path):
         errs.append(conflict)
-    errs += image_prompt_errors(image)
+    errs += image_prompt_errors(image) + image_coherence_errors(image, post, path)
     return errs, post, comment, len(URL.findall(comment))
 
 
@@ -145,4 +197,5 @@ if __name__ == "__main__":
     if errs:
         print("FAILED:\n  " + "\n  ".join(errs))
         sys.exit(1)
-    print("OK: English post within the limit, sources in the first comment, closing line not reused")
+    print("OK: English post within the limit, sources in the first comment, closing line not "
+          "reused, image prompt derived from this post")

@@ -48,6 +48,8 @@ ASPECT = re.compile(r"Aspect\D{0,3}(4:5|1:1|3:1|1\.91:1)")
 MIN_PROMPT_WORDS = 25
 ALT_TEXT_MAX = 120  # LinkedIn's own limit: it cannot be edited after posting.
 URL = re.compile(r"https?://\S+")
+# The line pointing at the sources comment is boilerplate: it must not count as the closing line.
+POINTER = re.compile(r"(?i)sources?\b[^.\n]*first comment\.?")
 
 
 def split_sections(body):
@@ -78,8 +80,14 @@ def image_prompt_errors(image):
 
 
 def closer_of(path):
+    """The closing line: the last paragraph of the post, minus the pointer to the sources comment."""
     body = open(path, encoding="utf-8").read().split("---", 2)[-1]
-    return split_sections(body)[0].split("\n\n")[-1].strip()
+    paras = [p.strip() for p in split_sections(body)[0].split("\n\n") if p.strip()]
+    while paras and POINTER.fullmatch(paras[-1]):
+        paras.pop()
+    text = paras[-1] if paras else ""
+    tail = POINTER.search(text)
+    return text[:tail.start()].strip() if tail else text
 
 
 def closer_conflict(path, ratio=0.7):
